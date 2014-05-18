@@ -1310,7 +1310,7 @@ class EMT_Tret_Dash(EMT_Tret):
         self.rules = {
             u"mdash_symbol_to_html_mdash": {
                 u"description": u"Замена символа тире на html конструкцию",
-                u"pattern": u"/—/iu",
+                u"pattern": u"/—|--/iu",
                 u"replacement": u"&mdash;"
             },
             u"mdash": {
