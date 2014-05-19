@@ -8,7 +8,7 @@ EMT - Evgeny Muravjev Typograph
 
 BUILDING
 ========
-To build EMT you need php version 5.2 or older.
+To build EMT you need php version 5.2 or newer.
 Suggested way to build typograph is to run builder.php through web-server.
 
 E.g.:
