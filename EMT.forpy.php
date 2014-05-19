@@ -1362,7 +1362,7 @@ class EMT_Tret_Dash extends EMT_Tret
 	public $rules = array(
 		'mdash_symbol_to_html_mdash' => array(
 				'description'	=> 'Замена символа тире на html конструкцию',
-				'pattern' 		=> '/—/iu',
+				'pattern' 		=> '/—|--/iu',
 				'replacement' 	=> '&mdash;'
 			),
 		'mdash' => array(
