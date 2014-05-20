@@ -24,11 +24,11 @@ foreach($option_list['all'] as $opt => $info)
 		// одно из правил ядра
 		if(isset($info['way']))
 		{
-			if($info['way']!="reverse") $options[$opt] = ( $info['disabled'] ? "off" : "on" ) ; else $options[$opt] =  ( $info['disabled'] ? "on" : "off" ) ;  
+			if($info['way']!="reverse") $options[$opt] = ( isset($info['disabled']) ? "off" : "on" ) ; else $options[$opt] =  ( isset($info['disabled']) ? "on" : "off" ) ;  
 		}
 		if(isset($info['selector']))
 		{
-			if(isset($info['reversed'])) $options[$opt] = ( $info['disabled'] ? "on" : "off" ); else  $options[$opt] = ( $info['disabled'] ? "off" : "on" );
+			if(isset($info['reversed'])) $options[$opt] = ( isset($info['disabled']) ? "on" : "off" ); else  $options[$opt] = ( isset($info['disabled']) ? "off" : "on" );
 		}
 	}
 }
@@ -124,6 +124,10 @@ HTML;
 
 
 $phpself = $_SERVER['PHP_SELF'];
+$typograph_style=isset($typograph_style)?$typograph_style:'';
+$inputdata=isset($inputdata)?$inputdata:'';
+$htmlresult=isset($htmlresult)?$htmlresult:'';
+$optdisplay=isset($optdisplay)?$optdisplay:'';
 echo <<<HTML
 <html>
 	<head>
