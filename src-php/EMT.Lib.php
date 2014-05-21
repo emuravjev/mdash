@@ -297,7 +297,7 @@ class EMT_Lib
      */
     public static function encrypt_tag($text)
     {
-    	return base64_encode($text);
+    	return base64_encode($text)."=";
     }
     
     /**
@@ -308,7 +308,7 @@ class EMT_Lib
      */
     public static function decrypt_tag($text)
     {
-    	return base64_decode($text);
+    	return base64_decode(substr($text,0,-1));
     }
     
     

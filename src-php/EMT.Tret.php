@@ -41,10 +41,10 @@ class EMT_Tret {
 	 * 
 	 * @todo привязать к методам из Jare_Typograph_Tool
 	 */
-	const BASE64_PARAGRAPH_TAG = 'cA=='; // p
-	const BASE64_BREAKLINE_TAG = 'YnIgLw=='; // br / (с пробелом и слэшем)
-	const BASE64_NOBR_OTAG = 'bm9icg=='; // nobr
-	const BASE64_NOBR_CTAG = 'L25vYnI='; // /nobr
+	const BASE64_PARAGRAPH_TAG = 'cA==='; // p
+	const BASE64_BREAKLINE_TAG = 'YnIgLw==='; // br / (с пробелом и слэшем)
+	const BASE64_NOBR_OTAG = 'bm9icg==='; // nobr
+	const BASE64_NOBR_CTAG = 'L25vYnI=='; // /nobr
 	
 	/**
 	 * Типы кавычек

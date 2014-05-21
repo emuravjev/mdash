@@ -43,9 +43,8 @@ class EMT_Tret_Number extends EMT_Tret
 			),
 		'math_chars' => array(
 				'description'	=> 'Математические знаки больше/меньше/плюс минус/неравно',
-				'simple_replace' => true,
-				'pattern' 		=> array('!=', '<=', '>=', '~=', '+-'),
-				'replacement' 	=> array('&ne;', '&le;', '&ge;', '&cong;', '&plusmn;' )
+				'pattern' 		=> array('/!=/', '/\<=/', '/([^=]|^)\>=/', '/~=/', '/\+-/'),
+				'replacement' 	=> array('&ne;', '&le;', '\1&ge;', '&cong;', '&plusmn;' )
 			),
 			/*
 		'split_number_to_triads' => array(

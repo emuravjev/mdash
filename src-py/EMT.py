@@ -250,7 +250,7 @@ class _EMT_Lib:
 # @return     string
 #/
     def encrypt_tag(self, text):
-        return unicode(base64.b64encode(text.encode('utf-8'))) #TODO
+        return unicode(base64.b64encode(text.encode('utf-8')))+'=' #TODO
 
 
 # Метод, осуществляющий декодирование информации
@@ -259,7 +259,7 @@ class _EMT_Lib:
 # @return     string
 #/
     def decrypt_tag(self, text):
-        return unicode(base64.b64decode(text).decode('utf-8')) #TODO
+        return unicode(base64.b64decode(text[:-1]).decode('utf-8')) #TODO
 
 
     def strpos_ex(self, haystack, needle, offset = None): #TODO: &$haystack - '&' couldn't work
@@ -699,10 +699,10 @@ class _EMT_Lib:
     
 EMT_Lib = _EMT_Lib()
 
-BASE64_PARAGRAPH_TAG = 'cA==' 
-BASE64_BREAKLINE_TAG = 'YnIgLw==' 
-BASE64_NOBR_OTAG = 'bm9icg==' 
-BASE64_NOBR_CTAG = 'L25vYnI=' 
+BASE64_PARAGRAPH_TAG = 'cA===' 
+BASE64_BREAKLINE_TAG = 'YnIgLw===' 
+BASE64_NOBR_OTAG = 'bm9icg===' 
+BASE64_NOBR_CTAG = 'L25vYnI==' 
 
 QUOTE_FIRS_OPEN = '&laquo;'
 QUOTE_FIRS_CLOSE = '&raquo;'
