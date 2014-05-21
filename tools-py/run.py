@@ -5,6 +5,8 @@ import sys
 import re
 import base64
 import types
+import os.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 from EMT import EMTypograph
 import json
 

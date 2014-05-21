@@ -3,7 +3,7 @@
 error_reporting(E_ALL); 
 header('Content-Type: text/html; charset=utf-8');
 
-require_once("EMT.php");
+require_once("../EMT.php");
 
 
 

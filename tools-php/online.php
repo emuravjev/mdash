@@ -1,7 +1,7 @@
 <?php
 
-require_once("lib/lib.php");
-require_once("EMT.php");
+require_once("../lib/lib.php");
+require_once("../EMT.php");
 
 $typograph = new EMTypograph();
 $option_list = $typograph->get_options_list();
