@@ -71,15 +71,16 @@ class EMT_Tret_Abbr extends EMT_Tret
 			),	
 		'nobr_vtch_itd_itp'     => array(
 				'description'	=> 'Объединение сокращений и т.д., и т.п., в т.ч.',			
+				'cycled'		=> true,
 				'pattern' 		=> array(
-						'/(\s|\&nbsp\;)и( |\&nbsp\;)т\.?[ ]?д\./ue',
-						'/(\s|\&nbsp\;)и( |\&nbsp\;)т\.?[ ]?п\./ue',
-						'/(\s|\&nbsp\;)в( |\&nbsp\;)т\.?[ ]?ч\./ue',						
+						'/(^|\s|\&nbsp\;)и( |\&nbsp\;)т\.?[ ]?д(\.|$|\s|\&nbsp\;)/ue',
+						'/(^|\s|\&nbsp\;)и( |\&nbsp\;)т\.?[ ]?п(\.|$|\s|\&nbsp\;)/ue',
+						'/(^|\s|\&nbsp\;)в( |\&nbsp\;)т\.?[ ]?ч(\.|$|\s|\&nbsp\;)/ue',						
 					),
 				'replacement' 	=> array(
-						'$m[1].$this->tag("и т. д.", "span",  array("class" => "nowrap"))',
-						'$m[1].$this->tag("и т. п.", "span",  array("class" => "nowrap"))',
-						'$m[1].$this->tag("в т. ч.", "span",  array("class" => "nowrap"))',
+						'$m[1].$this->tag("и т. д.", "span",  array("class" => "nowrap")).($m[3]!="."? $m[3] : "" )',
+						'$m[1].$this->tag("и т. п.", "span",  array("class" => "nowrap")).($m[3]!="."? $m[3] : "" )',
+						'$m[1].$this->tag("в т. ч.", "span",  array("class" => "nowrap")).($m[3]!="."? $m[3] : "" )',
 					)
 			),
 		'nbsp_te'     => array(
