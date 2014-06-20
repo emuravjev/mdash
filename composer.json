@@ -1,0 +1,14 @@
+{
+    "name": "emuravjev/mdash",
+    "description": "EMT - Evgeny Muravjev Typograph",
+    "license": "Public Domain",
+    "authors": [
+        {
+            "name": "Evgeny Muravjev",
+            "email": "emuravjev@gmail.com"
+        }
+    ],
+    "autoload": {
+        "classmap": ["src-php/"]
+    }
+}
