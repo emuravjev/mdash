@@ -835,7 +835,7 @@ class EMTypograph extends EMT_Base
 		'Abbr.nobr_before_unit_volt' => 'direct',		
 		'Abbr.nbsp_before_unit' => 'direct',		
 		
-		'OptAlign.all' => array( 'description' => 'Inline стили или CSS', 'hide' => true, 'selector' => 'OptAlign.*'),
+		'OptAlign.all' => array( 'description' => 'Все настройки оптического выравнивания', 'hide' => true, 'selector' => 'OptAlign.*'),
 		'OptAlign.oa_oquote' => 'direct',	
 		'OptAlign.oa_obracket_coma' => 'direct',	
 		'OptAlign.oa_oquote_extra' => 'direct',	
