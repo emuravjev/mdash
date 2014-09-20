@@ -41,6 +41,7 @@ class EMT_Tret_Quote extends EMT_Tret
 						'/([a-zа-яё0-9]|\.|\&hellip\;|\!|\?|\>|\)|\:)(\s+)((\"|\\\")+)(\s+)(\.|\&hellip\;|\;|\:|\?|\!|\,|\)|\<\/|$| )/uie',
 						'/\>(\&laquo\;)\.($|\s|\<)/ui',
 						'/\>(\&laquo\;),($|\s|\<|\S)/ui',
+						'/\>(\&laquo\;):($|\s|\<|\S)/ui',
 					),
 				'replacement' 	=> 
 					array(
@@ -48,6 +49,7 @@ class EMT_Tret_Quote extends EMT_Tret
 						'$m[1] .$m[2]. str_repeat(self::QUOTE_FIRS_CLOSE, substr_count($m[3],"\"")+substr_count($m[3],"&laquo;") ) . $m[5]. $m[6]',
 						'>&raquo;.\2',
 						'>&raquo;,\2',
+						'>&raquo;:\2',
 					),
 			),
 		'open_quote_adv' => array(

@@ -8,7 +8,8 @@ class EMT_Tret_Space extends EMT_Tret
 {
 	public $title = "Расстановка и удаление пробелов";
 	
-	public $domain_zones = array('ru','ру','com','ком','org','орг', 'уа', 'ua');
+	public $domain_zones = array('ru','ру','ком','орг', 'уа', 'ua', 'uk', 'co', 'fr', 
+	                             'com', 'net', 'edu', 'gov', 'org', 'mil', 'int', 'info', 'biz', 'info', 'name', 'pro');
 	
 	public $classes = array(
 			'nowrap'           => 'word-spacing:nowrap;',
@@ -44,12 +45,13 @@ class EMT_Tret_Space extends EMT_Tret
 		'autospace_after_dot' => array(
 				'description'	=> 'Пробел после точки',
 				'pattern' 		=> array(
-						'/(\040|\t|\&nbsp\;|^)([a-zа-яё0-9]+)(\040|\t|\&nbsp\;)?\.([а-яёa-z]{4,})/iu', 
-						'/(\040|\t|\&nbsp\;|^)([a-zа-яё0-9]+)\.([а-яёa-z]{1,3})/iue', 
+						'/(\040|\t|\&nbsp\;|^)([a-zа-яё0-9]+)(\040|\t|\&nbsp\;)?\.([а-яёa-z]{5,})($|[^a-zа-яё])/iue', 
+						'/(\040|\t|\&nbsp\;|^)([a-zа-яё0-9]+)\.([а-яёa-z]{1,4})($|[^a-zа-яё])/iue', 
 						),
 				'replacement' 	=> array(
-						'\1\2. \4',
-						'$m[1].$m[2]."." .(in_array(EMT_Lib::strtolower($m[3]), $this->domain_zones)? "":" "). $m[3]'
+						//'\1\2. \4',
+						'$m[1].$m[2]."." .( $m[5] == "." ? "" : " ").$m[4].$m[5]',
+						'$m[1].$m[2]."." .(in_array(EMT_Lib::strtolower($m[3]), $this->domain_zones)? "":( $m[4] == "." ? "" : " ")). $m[3].$m[4]'
 						),
 			),	
 		'autospace_after_hellips' => array(

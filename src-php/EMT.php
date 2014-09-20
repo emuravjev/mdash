@@ -119,7 +119,7 @@ class EMT_Base
      */
     private function _add_safe_block($id, $open, $close, $tag)
     {
-    	$this->_safe_blocks[$id] = array(
+    	$this->_safe_blocks[] = array(
     			'id' => $id,
     			'tag' => $tag,
     			'open' =>  $open,
@@ -145,7 +145,9 @@ class EMT_Base
      */
     public function remove_safe_block($id)
     {
-    	unset($this->_safe_blocks[$id]);
+    	foreach($this->_safe_blocks as $k => $block) {
+    		if($block['id']==$id) unset($this->_safe_blocks[$k]);
+    	}
     }
     
     
@@ -205,7 +207,8 @@ class EMT_Base
     	if (count($this->_safe_blocks)) 
     	{
     		$safeType = true === $way ? "EMT_Lib::encrypt_tag(\$m[2])" : "stripslashes(EMT_Lib::decrypt_tag(\$m[2]))";
-       		foreach ($this->_safe_blocks as $block) 
+    		$safeblocks = true === $way ? $this->_safe_blocks : array_reverse($this->_safe_blocks);
+       		foreach ($safeblocks as $block) 
        		{
         		$text = preg_replace_callback("/({$block['open']})(.+?)({$block['close']})/s",   create_function('$m','return $m[1].'.$safeType . '.$m[3];')   , $text);
         	}
