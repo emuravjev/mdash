@@ -3,7 +3,7 @@
 
 ###################################################
 ##  Evgeny Muravjev Typograph, http://mdash.ru   ##
-##  Version: 3.3-py (beta)                       ##
+##  Version: 3.4-py (beta)                       ##
 ##  Release Date: May 4, 2014                    ##
 ##  Authors: Evgeny Muravjev & Alexander Drutsa  ## 
 ###################################################
@@ -250,7 +250,7 @@ class _EMT_Lib:
 # @return     string
 #/
     def encrypt_tag(self, text):
-        return unicode(base64.b64encode(text.encode('utf-8'))) #TODO
+        return unicode(base64.b64encode(text.encode('utf-8')))+'=' #TODO
 
 
 # Метод, осуществляющий декодирование информации
@@ -259,7 +259,7 @@ class _EMT_Lib:
 # @return     string
 #/
     def decrypt_tag(self, text):
-        return unicode(base64.b64decode(text).decode('utf-8')) #TODO
+        return unicode(base64.b64decode(text[:-1]).decode('utf-8')) #TODO
 
 
     def strpos_ex(self, haystack, needle, offset = None): #TODO: &$haystack - '&' couldn't work
@@ -699,10 +699,10 @@ class _EMT_Lib:
     
 EMT_Lib = _EMT_Lib()
 
-BASE64_PARAGRAPH_TAG = 'cA==' 
-BASE64_BREAKLINE_TAG = 'YnIgLw==' 
-BASE64_NOBR_OTAG = 'bm9icg==' 
-BASE64_NOBR_CTAG = 'L25vYnI=' 
+BASE64_PARAGRAPH_TAG = 'cA===' 
+BASE64_BREAKLINE_TAG = 'YnIgLw===' 
+BASE64_NOBR_OTAG = 'bm9icg===' 
+BASE64_NOBR_CTAG = 'L25vYnI==' 
 
 QUOTE_FIRS_OPEN = '&laquo;'
 QUOTE_FIRS_CLOSE = '&raquo;'
@@ -1190,7 +1190,7 @@ class EMT_Base:
         self.remove_notg = False
         
         self.settings = {}
-        self._safe_blocks = {}	
+        self._safe_blocks = []	
 
     def log(self, xstr, data = None):
         if not self.logging:
@@ -1257,12 +1257,12 @@ class EMT_Base:
     # * @return  void
     # */
     def _add_safe_block(self, xid, xopen, close, tag):
-        self._safe_blocks[xid] = {
+        self._safe_blocks.append({
                     'id' : xid,
                     'tag' : tag,
                     'open' :  xopen,
                     'close' :  close
-            }
+            })
     
     # /**
     # * Список защищенных блоков
@@ -1279,7 +1279,14 @@ class EMT_Base:
     # * @return  void
     # */
     def remove_safe_block(self, xid):
-       del self._safe_blocks[xid]
+        i = 0
+        for x in self._safe_blocks:            
+            if x['id'] == xid:
+                break
+            i += 1
+        if i == len(self._safe_blocks):
+            return
+        del self._safe_blocks[i]
     
     
     # /**
@@ -1328,10 +1335,13 @@ class EMT_Base:
     def safe_blocks(self, text, way, show = True):
         if len(self._safe_blocks): 
             safeType =  "EMT_Lib.encrypt_tag(m.group(2))" if True == way else "stripslashes(EMT_Lib.decrypt_tag(m.group(2)))"
+            selfblocks = self._safe_blocks
+            if not way:
+                selfblocks.reverse()
             def safereplace(m):
                 return m.group(1)+(EMT_Lib.encrypt_tag(m.group(2)) if True == way else EMT_Lib.decrypt_tag(m.group(2)).replace("\\n","\n").replace("\\r","\n").replace("\\",""))+m.group(3)
-            for idx in self._safe_blocks:
-                block = self._safe_blocks[idx]
+            for idx in selfblocks:
+                block = idx
                 #text = EMT_Lib.preg_replace(u"/("+block['open']+u")(.+?)("+block['close']+u")/ue", 'm.group(1)+' + safeType + '+m.group(3)', text)
                 text = re.sub(u"("+block['open']+u")(.+?)("+block['close']+u")", safereplace, text, 0, re.U)
         return text

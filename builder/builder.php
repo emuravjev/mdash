@@ -1,6 +1,6 @@
 <?php
 
-	require_once("./bios.01.fs.php");
+	require_once("../lib/fs.php");
 	
 	header("Content-type: text/html; charset=utf-8");
 	
@@ -66,10 +66,13 @@ HTML;
 		}
 		
 		
-		$listx = BIOSFS::list_only_files("../src/","/^EMT.Tret\..*\.php$/");
+		$listx = FS::list_only_files("../src-php/","/^EMT.Tret\..*\.php$/");
+		
+		if($action == "installerpy") {
+			$resname = "../EMT.forpy.php";
+		}
 		
 		$fp = fopen($resname,"w");
-		$fp2 = fopen("../EMT.forpy.php","w");
 		$dfile = "";
 		
 		$list = array();
@@ -85,32 +88,22 @@ HTML;
 <<<CODE
 /**
 * Evgeny Muravjev Typograph, http://mdash.ru
-* Version: 3.3 Gold Master
+* Version: 3.4 Gold Master
 * Release Date: May 4, 2014
 * Authors: Evgeny Muravjev & Alexander Drutsa  
 */
 
 CODE
 );
-		
-		fprintf($fp2, "<?php");
-		fprintf($fp2, "\n\n");
 	
 		foreach($list as $file )
 		{
-			$s = phpfile_read("../src/$file", $size);
+			$s = phpfile_read("../src-php/$file", $size, $action == "installerpy");
 			fputs($fp, $s, $size );
-			
-			$s2 = phpfile_read("../src/$file", $size2, true);
-			fputs($fp2, $s2, $size2 );
 		}
 		
 		fprintf($fp, "?>");
 		fclose($fp);
-		
-		fprintf($fp2, "?>");
-		fclose($fp2);
-		
 		
 		echo "Сгенерирован скрипт типографа для PHP<br />";
 	}
@@ -128,10 +121,9 @@ CODE
 			$tretsx[] = work_for_py($tretx);
 		}
 		
-		
-		
 		$zz = str_replace("#####EMT_TRETS#####",  implode("", $tretsx), $z);
 		file_put_contents("../EMT.py",  $zz);
+		@unlink("../EMT.forpy.php");
 		echo "Сгенерирован скрипт типографа для Python<br />";
 	}
 	

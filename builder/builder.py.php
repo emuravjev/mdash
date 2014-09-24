@@ -39,7 +39,7 @@
 		$rules = prepare_var($rules);
 		
 		
-		$zf = file_get_contents("../src/".str_replace("_",".",$cls).".php");
+		$zf = file_get_contents("../src-php/".str_replace("_",".",$cls).".php");
 		echo "Обработка класса $cls<br />\n";
 		$b = array();
 		if(preg_match_all('/(public|protected|private) +\$([a-z0-9_]+)/i', $zf, $m,PREG_SET_ORDER)) {
@@ -232,6 +232,7 @@ function arrayreplace($str) {
 		$l = getbetweensymb($str, $r+ 5, "(" , ")");
 		if($l === false) {
 			echo "<b>ERROR REPLACING ARRAY()</b><br />";
+			exit(1);
 			return false;
 		}
 		//eval('$xx = '.mb_substr($str, $r, $l['end'] - $r).' ;');
@@ -307,6 +308,7 @@ function condopreplace($str) {
 		$left = fundleftopen($str, $r);
 		if($left === false) {
 			echo "CANT'T FIND LEFT BRACKET FOR ?<br>";
+			exit(1);
 			return false;
 		}
 		
@@ -314,6 +316,7 @@ function condopreplace($str) {
 		$z = getbetweensymb($str, $left, "(", ")");
 		if($z === false) {
 			echo "CANT'T FIND RIGHT BRACKET FOR ?<br>";
+			exit(1);
 			return false;
 		}
 		$right = $z['end'] ;
@@ -322,10 +325,12 @@ function condopreplace($str) {
 			$col = mb_strpos($str, ":", $offx);
 			if($col === false)  {
 				echo "CANT'T FIND COLON FOR ?<br>";
+				exit(1);
 				return false;
 			}
 			if($colon >= $right) {
 				echo "CANT'T FIND COLON FOR ?<br>";
+				exit(1);
 				return false;
 			}
 			if(inbrackets($str,$col)) {
@@ -467,88 +472,6 @@ function utf162utf8($utf16)
                 
             	$ascii = '';
                 $strlen_var = strlen($var);
-				/*
-                for ($c = 0; $c < $strlen_var; ++$c) {
-
-                    $ord_var_c = ord($var{$c});
-					
-                    switch (true) {
-                        case $ord_var_c == 0x08:
-                            $ascii .= '\b';
-                            break;
-                        case $ord_var_c == 0x09:
-                            $ascii .= '\t';
-                            break;
-                        case $ord_var_c == 0x0A:
-                            $ascii .= '\n';
-                            break;
-                        case $ord_var_c == 0x0C:
-                            $ascii .= '\f';
-                            break;
-                        case $ord_var_c == 0x0D:
-                            $ascii .= '\r';
-                            break;
-
-                        case $ord_var_c == 0x22:
-                        case $ord_var_c == 0x2F:
-                        case $ord_var_c == 0x5C:
-                            $ascii .= '\\'.$var{$c};
-                            break;
-
-                        case (($ord_var_c >= 0x20) && ($ord_var_c <= 0x7F)):
-                            $ascii .= $var{$c};
-                            break;
-
-                        case (($ord_var_c & 0xE0) == 0xC0):
-                            $char = pack('C*', $ord_var_c, ord($var{$c + 1}));
-                            $c += 1;
-                            $utf16 = utf82utf16($char);
-                            $ascii .= sprintf('\u%04s', bin2hex($utf16));
-                            break;
-
-                        case (($ord_var_c & 0xF0) == 0xE0):
-                            $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}));
-                            $c += 2;
-                            $utf16 = utf82utf16($char);
-                            $ascii .= sprintf('\u%04s', bin2hex($utf16));
-                            break;
-
-                        case (($ord_var_c & 0xF8) == 0xF0):
-                            $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}));
-                            $c += 3;
-                            $utf16 = utf82utf16($char);
-                            $ascii .= sprintf('\u%04s', bin2hex($utf16));
-                            break;
-
-                        case (($ord_var_c & 0xFC) == 0xF8):
-                            $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}),
-                                         ord($var{$c + 4}));
-                            $c += 4;
-                            $utf16 = utf82utf16($char);
-                            $ascii .= sprintf('\u%04s', bin2hex($utf16));
-                            break;
-
-                        case (($ord_var_c & 0xFE) == 0xFC):
-                            $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}),
-                                         ord($var{$c + 4}),
-                                         ord($var{$c + 5}));
-                            $c += 5;
-                            $utf16 = utf82utf16($char);
-                            $ascii .= sprintf('\u%04s', bin2hex($utf16));
-                            break;
-                    }
-                }*/
                 return 'u"'.addslashes($var).'"';
 
             case 'array':

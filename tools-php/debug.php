@@ -1,7 +1,7 @@
 <?php
 
-require_once("lib/lib.php");
-require_once("EMT.php");
+require_once("../lib/lib.php");
+require_once("../EMT.php");
 
 
 header('Content-Type: text/html; charset=utf-8');
