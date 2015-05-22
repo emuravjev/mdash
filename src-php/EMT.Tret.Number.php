@@ -28,7 +28,7 @@ class EMT_Tret_Number extends EMT_Tret
 			),
 		'numeric_sub' => array(
 				'description'	=> 'Нижний индекс',
-				'pattern' 		=> '/([a-zа-яё0-9])\_([\d]{1,3})([^а-яёa-z0-9]|$)/ieu',
+				'pattern' 		=> '/([a-zа-яё0-9])\_([\d]{1,3})([^@а-яёa-z0-9]|$)/ieu',
 				'replacement' 	=> '$m[1] . $this->tag($this->tag($m[2],"small"),"sub") . $m[3]'
 			),
 		'numeric_sup' => array(

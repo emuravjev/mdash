@@ -42,6 +42,7 @@ class EMT_Tret_Quote extends EMT_Tret
 						'/\>(\&laquo\;)\.($|\s|\<)/ui',
 						'/\>(\&laquo\;),($|\s|\<|\S)/ui',
 						'/\>(\&laquo\;):($|\s|\<|\S)/ui',
+						'/\>(\&laquo\;)\)($|\s|\<|\S)/ui',
 					),
 				'replacement' 	=> 
 					array(
@@ -50,6 +51,8 @@ class EMT_Tret_Quote extends EMT_Tret
 						'>&raquo;.\2',
 						'>&raquo;,\2',
 						'>&raquo;:\2',
+						'>&raquo;;\2',
+						'>&raquo;)\2',
 					),
 			),
 		'open_quote_adv' => array(

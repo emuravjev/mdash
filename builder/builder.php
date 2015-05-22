@@ -12,6 +12,7 @@
 		echo <<<HTML
 	<a href="$phpself?action=installer">Сгенерировать файл типографа для PHP</a><br>
 	<a href="$phpself?action=installerpy">Сгенерировать файл типографа для Python</a><br>
+	<a href="$phpself?action=testpy">Сгенерировать тесты для Python</a><br>
 HTML;
 		exit;
 	} 
@@ -128,9 +129,8 @@ CODE
 	}
 	
 	if($action == "testpy") {
-		require_once("builder.py.php");
 		$noecho = 1;
-		require_once("../test.php");
+		require_once("../tools-php/test.php");
 		$list = FS::list_only_files("../tests/", '/^test\.[0-9a-z\.\-_]+\.php$/i');
 		
 		if(count($list)>0)
@@ -145,12 +145,9 @@ CODE
 			echo "В каталоге tests тесты не обнаружены";
 			exit;
 		}
-		$r = file_get_contents("../EMT.test.py");
-		//$r = str_replace ("TESTLIST", , $r);
 		
-		file_put_contents("../tests.json", json_encode($tester->list));
-		//file_put_contents("../test.py", $r);
-		echo "Сгенерирован скрипт теста типографа для Python<br />";
+		file_put_contents("../tests/tests.json", json_encode($tester->list));
+		echo "Сгенерированы тесты типографа для Python<br />";
 	}
 
 ?>
