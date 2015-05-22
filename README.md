@@ -38,6 +38,7 @@ http://localhost/mdash/tools-php/test.php
 
 To python tests you need first build test set from php version through builder/builder.php, and
 then run the tests:
+
 cd tools-py
 
 python test.py
