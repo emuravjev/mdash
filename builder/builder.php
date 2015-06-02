@@ -39,7 +39,7 @@ HTML;
 			return implode("\n", $a);
 		}
 		
-		function phpfile_read($file, &$size, $all = false)
+		function phpfile_read($file, $all = false)
 		{
 			$size = filesize($file);
 			$fp2 = fopen($file, "r");
@@ -61,8 +61,7 @@ HTML;
 				$s = removebetween($s, "/**PYTHON", "PYTHON**/");
 				$s = removelinewith($s, "replacement_py");
 			}
-			
-			$size = strlen($s);
+
 			return $s;
 		}
 		
@@ -99,8 +98,8 @@ CODE
 	
 		foreach($list as $file )
 		{
-			$s = phpfile_read("../src-php/$file", $size, $action == "installerpy");
-			fputs($fp, $s, $size );
+			$s = phpfile_read("../src-php/$file", $action == "installerpy");
+			fputs($fp, $s);
 		}
 		
 		fprintf($fp, "?>");
