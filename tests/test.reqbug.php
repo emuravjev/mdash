@@ -236,5 +236,6 @@ $tester->add_test("«\"Motherfucker\" — это песня об ответст�
 
 $tester->add_test("«Веселье в Акапулькó» крутое. Спецсимвол \"Последний символ ASCII таблицы - ¥\".", "&laquo;Веселье в&nbsp;Акапулькó&raquo; крутое. Спецсимвол &laquo;Последний символ ASCII таблицы&nbsp;&mdash; ¥&raquo;." , null, "Закрывающая кавычка после спец символов.", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 $tester->add_test("«Иероглиф ".EMT_Lib::_getUnicodeChar(0x2FC7)."\" и «Иероглиф ".EMT_Lib::_getUnicodeChar(0x3042)."\".", "&laquo;Иероглиф ".EMT_Lib::_getUnicodeChar(0x2FC7)."&raquo; и&nbsp;&laquo;Иероглиф ".EMT_Lib::_getUnicodeChar(0x3042)."&raquo;." , null, "Закрывающая кавычка после иероглифов.", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+$tester->add_test("«В пролете&rdquo;", "&laquo;В&nbsp;пролете&raquo;" , null, "Баг с rdquo.", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 
 ?>

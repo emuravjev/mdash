@@ -13,7 +13,7 @@ class EMT_Lib
 	 * @var array
 	 */
 	public static $_charsTable = array(
-		'"' 	=> array('html' => array('&laquo;', '&raquo;', '&ldquo;', '&lsquo;', '&bdquo;', '&ldquo;', '&quot;', '&#171;', '&#187;'),
+		'"' 	=> array('html' => array('&laquo;', '&raquo;', '&rdquo;', '&lsquo;', '&bdquo;', '&ldquo;', '&quot;', '&#171;', '&#187;'),
 					 	 'utf8' => array(0x201E, 0x201C, 0x201F, 0x201D, 0x00AB, 0x00BB)),
 		' ' 	=> array('html' => array('&nbsp;', '&thinsp;', '&#160;'),
 					 	 'utf8' => array(0x00A0, 0x2002, 0x2003, 0x2008, 0x2009)),
