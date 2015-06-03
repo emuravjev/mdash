@@ -288,13 +288,13 @@ class _EMT_Lib:
 
     def process_selector_pattern(self, pattern): #TODO: &$pattern - '&' couldn't work
         if(pattern==False):
-            return
+            return False
         #pattern = preg_quote(pattern , '/') #TODO 
         pattern = pattern.replace("*", "[a-z0-9_\-]*") #TODO 
         return pattern
 
     def test_pattern(self, pattern, text):
-        if(pattern == False):
+        if(pattern == False or pattern == None):
             return True
     
         return re.match(pattern, text) #TODO 
@@ -564,8 +564,8 @@ class _EMT_Lib:
 # @return string
 #/
     def html_char_entity_to_unicode(self, entity):
-        if(entity in html4_char_ents):
-            return EMT_Lib.getUnicodeChar(html4_char_ents[entity])
+        if(EMT_Lib.html4_char_ents.get(entity)):
+            return unichr(EMT_Lib.html4_char_ents[entity])
         
         return False
 
@@ -576,10 +576,10 @@ class _EMT_Lib:
 #/
     def convert_html_entities_to_unicode(self, text):  #TODO: &$text - '&' couldn't work
         text = re.sub("\&#([0-9]+)\;", 
-                lambda m: EMT_Lib.getUnicodeChar(int(m.group(1)))
+                lambda m: unichr(int(m.group(1)))
                 , text) #TODO
         text = re.sub("\&#x([0-9A-F]+)\;", 
-                lambda m: EMT_Lib.getUnicodeChar(int(m.group(1),16))
+                lambda m: unichr(int(m.group(1),16))
                 , text) #TODO
         text = re.sub("\&([a-zA-Z0-9]+)\;", 
                 lambda m: EMT_Lib.html_char_entity_to_unicode(m.group(1)) if  EMT_Lib.html_char_entity_to_unicode(m.group(1)) else m.group(0)
@@ -1718,26 +1718,55 @@ class EMT_Base:
     # *  3. Если $key массив - то будет задана группа настроек
     # *       - если $value массив , то настройки определяются по ключам из массива $key, а значения из $value
     # *       - иначе, $key содержит ключ-значение как массив  
+	# *  4. $exact_match - если true тогда array selector будет соответсвовать array $key, а не произведению массивов
     # *
     # * @param mixed $selector
     # * @param mixed $key
     # * @param mixed $value
+	# * @param mixed $exact_match
     # */
-    def set(self, selector, key , value = False):
-        if isinstance(selector, (list,tuple)):
-            for val in selector:
-                self.set(val, key, value)
-            return
-        if isinstance(selector, dict):
-            for x in key:
-                y = key[x]
+    def set(self, selector, key , value = False, exact_match = False):
+        if exact_match and isinstance(selector, (list,tuple,set)) and isinstance(key, (list,tuple,dict,set)) and len(selector)==len(key):
+            ind = 0
+            for xx in key:
+                if isinstance(key, dict):
+                    x = xx
+                    y = key[x]
+                else:
+                    x = ind
+                    y = xx
                 if isinstance(value, dict):
                     kk = y
                     vv = value[x]
                 else:
-                    kk = x
-                    vv = y
+                    kk = y if value else x ;
+                    vv = value if value else y ;
+                self.set(selector[ind], kk, vv)
+                ind += 1
+            return 
+        if isinstance(selector, (list,tuple,set)):
+            for val in selector:
+                self.set(val, key, value)
+            return
+        if isinstance(key, (list,tuple,dict,set)):
+            ind = 0
+            for xx in key:
+                if isinstance(key, dict):
+                    x = xx
+                    y = key[x]
+                else:
+                    x = ind
+                    y = xx
+                if isinstance(value, dict):
+                    kk = y
+                    vv = value[x]
+                else:
+                    kk = y if value else x ;
+                    vv = value if value else y ;
+				
                 self.set(selector, kk, vv)
+                ind += 1
+            return 
         self.doset(selector, key, value)
     
     
@@ -1888,7 +1917,8 @@ class EMTypograph(EMT_Base):
                 
                 
                 #'Etc.no_nbsp_in_nobr' : 'direct',		
-                'Etc.unicode_convert' : {'description' : 'Преобразовывать html-сущности в юникод', 'selector' : '*', 'setting' : 'dounicode' , 'disabled' : True},
+                'Etc.unicode_convert' : {'description' : 'Преобразовывать html-сущности в юникод', 'selector' : ['*', 'Etc.nobr_to_nbsp'], 'setting' : ['dounicode','active'], 'exact_selector' : True ,'disabled': True},
+				'Etc.nobr_to_nbsp' : 'direct',
         }
         
         
@@ -1973,7 +2003,7 @@ class EMTypograph(EMT_Base):
                 settingname = "active"
                 if self.all_options[name].has_key('setting'):
                     settingname = self.all_options[name]['setting']
-                self.set(self.all_options[name]['selector'], settingname, value)
+                self.set(self.all_options[name]['selector'], settingname, value, self.all_options[name].get('exact_selector'))
         
         if name == "OptAlign.layout":
             if value == "style":

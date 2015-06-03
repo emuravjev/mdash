@@ -47,6 +47,11 @@ class EMT_Tret_Etc extends EMT_Tret
 				'description'	=> 'Удаление nbsp в nobr/nowrap тэгах',
 				'function'	=> 'remove_nbsp'
 			),
+		'nobr_to_nbsp' => array(
+				'description'	=> 'Преобразование nobr в nbsp',
+				'disabled'		=> true,
+				'function'	=> 'nobr_to_nbsp'
+			),
 		);
 
 	
@@ -69,6 +74,15 @@ class EMT_Tret_Etc extends EMT_Tret
 		} while(preg_match($match, $this->_text));
 		
 		$this->_text = $this->preg_replace_e('/'.$b.'.*?'.$e.'/iue', 'str_replace("&nbsp;"," ",$m[0]);' , $this->_text );
+	}
+	
+	protected function nobr_to_nbsp()
+	{
+		$thetag = $this->tag("###", 'span', array('class' => "nowrap"));
+		$arr = explode("###", $thetag);
+		$b = preg_quote($arr[0], '/');
+		$e = preg_quote($arr[1], '/');
+		$this->_text = $this->preg_replace_e('/'.$b.'(.*?)'.$e.'/iue', 'str_replace(" ","&nbsp;",$m[1]);' , $this->_text );
 	}
 	
 }
@@ -96,6 +110,14 @@ class EMT_Tret_Etc extends EMT_Tret
         
         self._text = EMT_Lib.preg_replace(u'/' + b + u'.*?' + e + u'/iue', u'EMT_Lib.str_replace("&nbsp;"," ",m.group(0))' , self._text )
 
+    def nobr_to_nbsp(self):
+        thetag = self.tag(u"###", u'span', {u'class': u"nowrap"})
+        arr = thetag.split(u"###")
+        b = re.escape(arr[0])
+        e = re.escape(arr[1])
+        
+        self._text = EMT_Lib.preg_replace(u'/' + b + u'(.*?)' + e + u'/iue', u'EMT_Lib.str_replace(" ","&nbsp;",m.group(1))' , self._text )
+        
 PYTHON**/
 
 ?>

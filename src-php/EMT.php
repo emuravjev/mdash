@@ -655,13 +655,31 @@ class EMT_Base
 	 *  3. Если $key массив - то будет задана группа настроек
 	 *       - если $value массив , то настройки определяются по ключам из массива $key, а значения из $value
 	 *       - иначе, $key содержит ключ-значение как массив  
+	 *  4. $exact_match - если true тогда array selector будет соответсвовать array $key, а не произведению массивов
 	 *
 	 * @param mixed $selector
 	 * @param mixed $key
 	 * @param mixed $value
+	 * @param mixed $exact_match
 	 */
-	public function set($selector, $key , $value = false)
+	public function set($selector, $key , $value = false, $exact_match = false)
 	{
+		if($exact_match && is_array($selector) && is_array($key) && count($selector)==count($key)) {
+			$idx = 0;
+			foreach($key as $x => $y){
+				if(is_array($value))
+				{
+					$kk = $y;
+					$vv = $value[$x];
+				} else {
+					$kk = ( $value ? $y : $x );
+					$vv = ( $value ? $value : $y );
+				}
+				$this->set($selector[$idx], $kk , $vv);
+				$idx++;
+			}
+			return ;
+		}
 		if(is_array($selector)) 
 		{
 			foreach($selector as $val) $this->set($val, $key, $value);
@@ -676,11 +694,12 @@ class EMT_Base
 					$kk = $y;
 					$vv = $value[$x];
 				} else {
-					$kk = $x;
-					$vv = $y;
+					$kk = ( $value ? $y : $x );
+					$vv = ( $value ? $value : $y );
 				}
 				$this->set($selector, $kk, $vv);
 			}
+			return ;
 		}
 		$this->doset($selector, $key, $value);
 	}
@@ -852,7 +871,8 @@ class EMTypograph extends EMT_Base
 		
 		
 		//'Etc.no_nbsp_in_nobr' => 'direct',		
-		'Etc.unicode_convert' => array('description' => 'Преобразовывать html-сущности в юникод', 'selector' => '*', 'setting' => 'dounicode' , 'disabled' => true),
+		'Etc.unicode_convert' => array('description' => 'Преобразовывать html-сущности в юникод', 'selector' => array('*', 'Etc.nobr_to_nbsp'), 'setting' => array('dounicode','active'), 'exact_selector' => true ,'disabled' => true),
+		'Etc.nobr_to_nbsp' => 'direct',
 	
 	);
 	
@@ -940,7 +960,7 @@ class EMTypograph extends EMT_Base
 			{
 				$settingname = "active";
 				if(isset($this->all_options[$name]['setting'])) $settingname = $this->all_options[$name]['setting'];
-				$this->set($this->all_options[$name]['selector'], $settingname, $value);
+				$this->set($this->all_options[$name]['selector'], $settingname, $value, isset($this->all_options[$name]['exact_selector']));
 			}
 		}
 		

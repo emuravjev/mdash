@@ -219,5 +219,9 @@ $tester->add_test("showme.info", "showme.info" , null, "Обработка до�
 $tester->add_test("Framework.NET", "Framework.NET" , null, "Обработка домена 3", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 $tester->add_test("сообщила корреспонденту сайта XXX.RU Лариса Федоровна", "сообщила корреспонденту сайта XXX.RU Лариса Федоровна" , null, "Баг проставления иницаилов при использовании домена", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 
+$tester->add_test("Температура достигала -20... -30 градусов Цельсия.", "Температура достигала −20… −30 градусов Цельсия." , null, "Преобразование в юникод", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off', 'Etc.unicode_convert' => 'on'));
+$tester->add_test("и тд и тп.", "и".EMT_Lib::html_char_entity_to_unicode('nbsp')."т.".EMT_Lib::html_char_entity_to_unicode('nbsp')."д. и".EMT_Lib::html_char_entity_to_unicode('nbsp')."т.".EMT_Lib::html_char_entity_to_unicode('nbsp')."п." , null, "Преобразование в юникод с nobr", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off', 'Etc.unicode_convert' => 'on'));
+$tester->add_test("и тд и тп.", "<nobr>и т. д.</nobr> <nobr>и т. п.</nobr>" , null, "Преобразование в юникод с отключённым nobr", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off', 'Etc.unicode_convert' => 'on', 'Etc.nobr_to_nbsp' => 'off'));
+
 
 ?>
