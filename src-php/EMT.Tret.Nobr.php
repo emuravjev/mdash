@@ -37,6 +37,11 @@ class EMT_Tret_Nobr extends EMT_Tret
 						'$m[1]  .(($m[1] == ">" || $m[11] == "<") ? $m[2]." ".$m[4]." ".$m[6]."-".$m[8]."-".$m[10] :$this->tag($m[2]." ".$m[4]." ".$m[6]."-".$m[8]."-".$m[10], "span", array("class"=>"nowrap"))  ).$m[11]',
 					),
 			),
+		'phone_builder_v2' => array(
+				'description'	=> 'Дополнительный формат номеров телефонов',
+				'pattern' 		=> '/([^\d]|^)\+\s?([0-9]{1})\s?\(([0-9]{3,4})\)\s?(\d{3})(\d{2})(\d{2})([^\d]|$)/ie',
+				'replacement'   => '$m[1].$this->tag("+".$m[2]." ".$m[3]." ".$m[4]."-".$m[5]."-".$m[6], "span",  array("class" => "nowrap")).$m[7]',
+			),
 		'ip_address' => array(
 				'description'	=> 'Объединение IP-адресов',
 				'pattern' 		=> '/(\s|\&nbsp\;|^)(\d{0,3}\.\d{0,3}\.\d{0,3}\.\d{0,3})/ie', 

@@ -802,6 +802,7 @@ class EMTypograph extends EMT_Base
 		'Nobr.super_nbsp' => 'direct',
 		'Nobr.nbsp_in_the_end' => 'direct',
 		'Nobr.phone_builder' => 'direct',
+		'Nobr.phone_builder_v2' => 'direct',
 		'Nobr.ip_address' => 'direct',
 		'Nobr.spaces_nobr_in_surname_abbr' => 'direct',
 		'Nobr.nbsp_celcius' => 'direct',		
