@@ -24,12 +24,12 @@ class EMT_Tret_Quote extends EMT_Tret
 			
 		'open_quote' => array(
 				'description'	=> 'Открывающая кавычка',
-				'pattern' 		=> '/(^|\(|\s|\>|-)(\"|\\\")(\S+)/iue',
-				'replacement' 	=> '$m[1] . self::QUOTE_FIRS_OPEN . $m[3]'
+				'pattern' 		=> '/(^|\(|\s|\>|-)((\"|\\\")+)(\S+)/iue',
+				'replacement' 	=> '$m[1] . str_repeat(self::QUOTE_FIRS_OPEN, substr_count($m[2],"\"") ) . $m[4]'
 			),
 		'close_quote' => array(
 				'description'	=> 'Закрывающая кавычка',
-				'pattern' 		=> '/([a-zа-яё0-9]|\.|\&hellip\;|\!|\?|\>|\)|\:)((\"|\\\")+)(\.|\&hellip\;|\;|\:|\?|\!|\,|\s|\)|\<\/|$)/uie',
+				'pattern' 		=> '/([a-zа-яё0-9]|\.|\&hellip\;|\!|\?|\>|\)|\:|\+|\%|\@|\#|\$|\*)((\"|\\\")+)(\.|\&hellip\;|\;|\:|\?|\!|\,|\s|\)|\<\/|\<|$)/uie',
 				'replacement' 	=> '$m[1] . str_repeat(self::QUOTE_FIRS_CLOSE, substr_count($m[2],"\"") ) . $m[4]'
 			),		
 		'close_quote_adv' => array(
@@ -37,12 +37,14 @@ class EMT_Tret_Quote extends EMT_Tret
 				//'pattern' 		=> '/([a-zа-яё0-9]|\.|\&hellip\;|\!|\?|\>|\)|\:)((\"|\\\"|\&laquo\;)+)(\<.+?\>)(\.|\&hellip\;|\;|\:|\?|\!|\,|\s|\)|\<\/|$)/uie',
 				'pattern' 		=> 
 					array(
-						'/([a-zа-яё0-9]|\.|\&hellip\;|\!|\?|\>|\)|\:)((\"|\\\"|\&laquo\;)+)(\<[^\>]+\>)(\.|\&hellip\;|\;|\:|\?|\!|\,|\)|\<\/|$| )/uie',
-						'/([a-zа-яё0-9]|\.|\&hellip\;|\!|\?|\>|\)|\:)(\s+)((\"|\\\")+)(\s+)(\.|\&hellip\;|\;|\:|\?|\!|\,|\)|\<\/|$| )/uie',
+						'/([a-zа-яё0-9]|\.|\&hellip\;|\!|\?|\>|\)|\:|\+|\%|\@|\#|\$|\*)((\"|\\\"|\&laquo\;)+)(\<[^\>]+\>)(\.|\&hellip\;|\;|\:|\?|\!|\,|\)|\<\/|$| )/uie',
+						'/([a-zа-яё0-9]|\.|\&hellip\;|\!|\?|\>|\)|\:|\+|\%|\@|\#|\$|\*)(\s+)((\"|\\\")+)(\s+)(\.|\&hellip\;|\;|\:|\?|\!|\,|\)|\<\/|$| )/uie',
 						'/\>(\&laquo\;)\.($|\s|\<)/ui',
 						'/\>(\&laquo\;),($|\s|\<|\S)/ui',
 						'/\>(\&laquo\;):($|\s|\<|\S)/ui',
+						'/\>(\&laquo\;);($|\s|\<|\S)/ui',
 						'/\>(\&laquo\;)\)($|\s|\<|\S)/ui',
+						'/((\"|\\\")+)$/uie',
 					),
 				'replacement' 	=> 
 					array(
@@ -53,12 +55,18 @@ class EMT_Tret_Quote extends EMT_Tret
 						'>&raquo;:\2',
 						'>&raquo;;\2',
 						'>&raquo;)\2',
+						'str_repeat(self::QUOTE_FIRS_CLOSE, substr_count($m[1],"\"") )',
 					),
 			),
 		'open_quote_adv' => array(
 				'description'	=> 'Открывающая кавычка особые случаи',
 				'pattern' 		=> '/(^|\(|\s|\>)(\"|\\\")(\s)(\S+)/iue',
 				'replacement' 	=> '$m[1] . self::QUOTE_FIRS_OPEN .$m[4]'
+			),
+		'close_quote_adv_2' => array(
+				'description'	=> 'Закрывающая кавычка последний шанс',
+				'pattern' 		=> '/(\S)((\"|\\\")+)(\.|\&hellip\;|\;|\:|\?|\!|\,|\s|\)|\<\/|\<|$)/uie',
+				'replacement' 	=> '$m[1] . str_repeat(self::QUOTE_FIRS_CLOSE, substr_count($m[2],"\"") ) . $m[4]'
 			),
 		'quotation' => array(
 				'description'	=> 'Внутренние кавычки-лапки и дюймы',

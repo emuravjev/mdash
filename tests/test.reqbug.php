@@ -223,5 +223,18 @@ $tester->add_test("Температура достигала -20... -30 град
 $tester->add_test("и тд и тп.", "и".EMT_Lib::html_char_entity_to_unicode('nbsp')."т.".EMT_Lib::html_char_entity_to_unicode('nbsp')."д. и".EMT_Lib::html_char_entity_to_unicode('nbsp')."т.".EMT_Lib::html_char_entity_to_unicode('nbsp')."п." , null, "Преобразование в юникод с nobr", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off', 'Etc.unicode_convert' => 'on'));
 $tester->add_test("и тд и тп.", "<nobr>и т. д.</nobr> <nobr>и т. п.</nobr>" , null, "Преобразование в юникод с отключённым nobr", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off', 'Etc.unicode_convert' => 'on', 'Etc.nobr_to_nbsp' => 'off'));
 
+$tester->add_test("интервью для «Афиши+»", "интервью для &laquo;Афиши+&raquo;" , null, "Закрывающая кавычка в конце", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+$tester->add_test("интервью для «Афиши+» вот", "интервью для &laquo;Афиши+&raquo; вот" , null, "Закрывающая кавычка после +", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+
+$tester->add_test("ООО Компания «Рога и копыта»<br/>
+Старый и надежный партнер", "ООО&nbsp;Компания &laquo;Рога и&nbsp;копыта&raquo;<br/>
+Старый и&nbsp;надежный партнер" , null, "Закрывающая кавычка перед тэгом", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off', 'Text.breakline' => 'off'));
+
+$tester->add_test("«\"Motherfucker\" — это песня об ответственности. Поэтому очень символично, что именно она стала первым синглом с альбома, за который
+мы сами несем полную ответственность», — заявил клавишник группы Родди Боттум.", "&laquo;&bdquo;Motherfucker&ldquo;&nbsp;&mdash; это песня об&nbsp;ответственности. Поэтому очень символично, что именно она стала первым синглом с&nbsp;альбома, за&nbsp;который<br />
+мы&nbsp;сами несем полную ответственность&raquo;,&nbsp;&mdash; заявил клавишник группы Родди Боттум." , null, "Две открывающие кавычки подряд", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+
+$tester->add_test("«Веселье в Акапулькó» крутое. Спецсимвол \"Последний символ ASCII таблицы - ¥\".", "&laquo;Веселье в&nbsp;Акапулькó&raquo; крутое. Спецсимвол &laquo;Последний символ ASCII таблицы&nbsp;&mdash; ¥&raquo;." , null, "Закрывающая кавычка после спец символов.", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+$tester->add_test("«Иероглиф ".EMT_Lib::_getUnicodeChar(0x2FC7)."\" и «Иероглиф ".EMT_Lib::_getUnicodeChar(0x3042)."\".", "&laquo;Иероглиф ".EMT_Lib::_getUnicodeChar(0x2FC7)."&raquo; и&nbsp;&laquo;Иероглиф ".EMT_Lib::_getUnicodeChar(0x3042)."&raquo;." , null, "Закрывающая кавычка после иероглифов.", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 
 ?>
