@@ -845,7 +845,8 @@ class EMTypograph extends EMT_Base
 		'Space.bracket_fix' => array( 'description' => 'Удаление пробелов внутри скобок, а также расстановка пробела перед скобками', 
 				'selector' => array('Space.nbsp_before_open_quote', 'Punctmark.fix_brackets')),
 				
-		'Abbr.nbsp_money_abbr' => 'direct',		
+		'Abbr.nbsp_money_abbr' => array( 'description' => 'Форматирование денежных сокращений (расстановка пробелов и привязка названия валюты к числу)', 
+				'selector' => array('Abbr.nbsp_money_abbr', 'Abbr.nbsp_money_abbr_rev')),
 		'Abbr.nobr_vtch_itd_itp' => 'direct',		
 		'Abbr.nobr_sm_im' => 'direct',		
 		'Abbr.nobr_acronym' => 'direct',		

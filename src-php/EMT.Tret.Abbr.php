@@ -95,6 +95,11 @@ class EMT_Tret_Abbr extends EMT_Tret
 				'replacement_python' => 'm.group(1)+(u"&nbsp;"+m.group(4)+(u"." if m.group(4)==u"тыс" else u"") if m.group(4) else u"")+u"&nbsp;"+(m.group(7) if not re.match(u"у[\\\\.]? ?е[\\\\.]?",m.group(7),re.I | re.U) else u"у.е.")'
 				//'replacement_py' => 'm.group(1)+(\"&nbsp;\"+m.group(4)+(m.group(4)==\"\u0442\u044b\u0441\"?\".\" if m.group(4) else \"\"):\"\")+\"&nbsp;\"+(m.group(7) if !preg_match(\"#\u0443[\\\\.]? ?\u0435[\\\\.]?#iu\",m.group(7)) else \"\u0443.\u0435.\")'
 			),
+		'nbsp_money_abbr_rev' => array(
+				'description'	=> 'Привязка валюты к числу спереди',
+				'pattern' 		=> '/(€|&euro;|\$)\s?(\d)/iu', 
+				'replacement' 	=> '\1&nbsp;\2'
+			),
 		'nbsp_org_abbr' => array(
 				'description'	=> 'Привязка сокращений форм собственности к названиям организаций',
 				'pattern' 		=> '/([^a-zA-Zа-яёА-ЯЁ]|^)(ООО|ЗАО|ОАО|НИИ|ПБОЮЛ) ([a-zA-Zа-яёА-ЯЁ]|\"|\&laquo\;|\&bdquo\;|<)/u', 

@@ -1890,9 +1890,12 @@ class EMTypograph(EMT_Base):
                 'Space.clear_before_after_punct' : { 'description' : 'Удаление пробелов перед и после знаков препинания в предложении', 'selector' : 'Space.remove_space_before_punctuationmarks'},
                 'Space.autospace_after' : { 'description' : 'Расстановка пробелов после знаков препинания', 'selector' : 'Space.autospace_after_*'},
                 'Space.bracket_fix' : { 'description' : 'Удаление пробелов внутри скобок, а также расстановка пробела перед скобками', 
-                                    'selector' : {'Space.nbsp_before_open_quote', 'Punctmark.fix_brackets'}
-                                },                            
-                'Abbr.nbsp_money_abbr' : 'direct',		
+                                    'selector' : ['Space.nbsp_before_open_quote', 'Punctmark.fix_brackets']
+                                },             
+
+                'Abbr.nbsp_money_abbr' : { 'description' : 'Форматирование денежных сокращений (расстановка пробелов и привязка названия валюты к числу)', 
+                                    'selector' : ['Abbr.nbsp_money_abbr', 'Abbr.nbsp_money_abbr_rev']
+                                },    
                 'Abbr.nobr_vtch_itd_itp' : 'direct',		
                 'Abbr.nobr_sm_im' : 'direct',		
                 'Abbr.nobr_acronym' : 'direct',		

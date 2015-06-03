@@ -133,5 +133,6 @@ HTML
 	
 	$tester->add_test("привет при'в'ет как дела", "привет при&rsquo;в&rsquo;ет как дела", null, "Два апострофа в слове", $no_p);
 
+	$tester->add_test("$125, $ 12, &euro; 1, €12", "$&nbsp;125, $&nbsp;12, &euro;&nbsp;1, &euro;&nbsp;12", null, "Привязка доллара и евро к числу", $no_p);
 
 ?>
