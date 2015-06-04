@@ -24,29 +24,29 @@ HTML
 , "Текст внутри скобок", $no_p);
 
 	$tester->add_test("в котором слышалась явная неприязнь к IP-телефонии, как к явлению", <<<HTML
-в&nbsp;котором слышалась явная неприязнь к&nbsp;IP-телефонии<span style="margin-right:-0.2em;">,</span><span style="margin-left:0.2em;"> </span>как к&nbsp;явлению
+в&nbsp;котором слышалась явная неприязнь к&nbsp;IP-телефонии, как к&nbsp;явлению
 HTML
 ,<<<HTML
-в&nbsp;котором слышалась явная неприязнь к&nbsp;IP-телефонии<span class="oa_comma_b">,</span><span class="oa_comma_e"> </span>как к&nbsp;явлению
+в&nbsp;котором слышалась явная неприязнь к&nbsp;IP-телефонии, как к&nbsp;явлению
 HTML
 , "IP-телефония", $no_p);
 
 
 	$tester->add_test("Для сравнения, пиар-эффект Bing", <<<HTML
-Для сравнения<span style="margin-right:-0.2em;">,</span><span style="margin-left:0.2em;"> </span>пиар-эффект Bing
+Для сравнения, пиар-эффект Bing
 HTML
 ,<<<HTML
-Для сравнения<span class="oa_comma_b">,</span><span class="oa_comma_e"> </span>пиар-эффект Bing
+Для сравнения, пиар-эффект Bing
 HTML
 , "Оптическое выравнивание", $no_p);
 
 
 
 	$tester->add_test("News и CNN. № 23, привет", <<<HTML
-News и&nbsp;CNN. &#8470;&thinsp;23<span style="margin-right:-0.2em;">,</span><span style="margin-left:0.2em;"> </span>привет
+News и&nbsp;CNN. &#8470;&thinsp;23, привет
 HTML
 ,<<<HTML
-News и&nbsp;CNN. &#8470;&thinsp;23<span class="oa_comma_b">,</span><span class="oa_comma_e"> </span>привет
+News и&nbsp;CNN. &#8470;&thinsp;23, привет
 HTML
 , "Сокращения и символ номера", $no_p);
 	
@@ -63,10 +63,10 @@ HTML
 
 
 	$tester->add_test("Единственное, чего на данный момент не хватает новому знаку, — это частоты применения.", <<<HTML
-Единственное<span style="margin-right:-0.2em;">,</span><span style="margin-left:0.2em;"> </span>чего на&nbsp;данный момент не&nbsp;хватает новому знаку,&nbsp;&mdash; это частоты применения.
+Единственное, чего на&nbsp;данный момент не&nbsp;хватает новому знаку,&nbsp;&mdash; это частоты применения.
 HTML
 ,<<<HTML
-Единственное<span class="oa_comma_b">,</span><span class="oa_comma_e"> </span>чего на&nbsp;данный момент не&nbsp;хватает новому знаку,&nbsp;&mdash; это частоты применения.
+Единственное, чего на&nbsp;данный момент не&nbsp;хватает новому знаку,&nbsp;&mdash; это частоты применения.
 HTML
 , "Тире и оптическое выравнивание", $no_p);
 	
@@ -83,10 +83,10 @@ HTML
 
 
 	$tester->add_test("обновлением: репортажем о первом в истории России интенсиве по иллюстрации, прошедшем в «Британке».", <<<HTML
-обновлением: репортажем о&nbsp;первом в&nbsp;истории России интенсиве по&nbsp;иллюстрации<span style="margin-right:-0.2em;">,</span><span style="margin-left:0.2em;"> </span>прошедшем в&nbsp;&laquo;Британке&raquo;.
+обновлением: репортажем о&nbsp;первом в&nbsp;истории России интенсиве по&nbsp;иллюстрации, прошедшем в&nbsp;&laquo;Британке&raquo;.
 HTML
 ,<<<HTML
-обновлением: репортажем о&nbsp;первом в&nbsp;истории России интенсиве по&nbsp;иллюстрации<span class="oa_comma_b">,</span><span class="oa_comma_e"> </span>прошедшем в&nbsp;&laquo;Британке&raquo;.
+обновлением: репортажем о&nbsp;первом в&nbsp;истории России интенсиве по&nbsp;иллюстрации, прошедшем в&nbsp;&laquo;Британке&raquo;.
 HTML
 , "Кавычки и оптическое выравнивание", $no_p);
 
@@ -104,10 +104,10 @@ HTML
 
 
 	$tester->add_test("http://yandex.ru, привет, как твои дела ?", <<<HTML
-<a href="http://yandex.ru">yandex.ru</a><span style="margin-right:-0.2em;">,</span><span style="margin-left:0.2em;"> </span>привет<span style="margin-right:-0.2em;">,</span><span style="margin-left:0.2em;"> </span>как твои дела?
+<a href="http://yandex.ru">yandex.ru</a>, привет, как твои дела?
 HTML
 ,<<<HTML
-<a href="http://yandex.ru">yandex.ru</a><span class="oa_comma_b">,</span><span class="oa_comma_e"> </span>привет<span class="oa_comma_b">,</span><span class="oa_comma_e"> </span>как твои дела?
+<a href="http://yandex.ru">yandex.ru</a>, привет, как твои дела?
 HTML
 , "УРЛ и выравнивание", $no_p);
 
@@ -132,10 +132,10 @@ HTML
 	$tester->add_test("1997год.", "1997 год.", null, "Пробел после года", array('Text.paragraphs'=>'off'));
 	$tester->add_test("<nobr>P.&nbsp;S.</nobr> привет всем с&nbsp;завода. <nobr>P. P.&nbsp;S.</nobr> и&nbsp;мне тоже.", "<nobr>P. S.</nobr> привет всем с&nbsp;завода. <nobr>P. P. S.</nobr> и&nbsp;мне тоже.", null, "Удаление nbsp из nobr/nowrap блоков", array('Text.paragraphs'=>'off'));
 	$tester->add_test("«Я лично сома на 57 кг вытащил. 57, 24 и 7 кг — трех сомов поймал», — цитирует его «Интерфакс».", <<<HTML
-<span style="margin-left:-0.44em;">&laquo;</span>Я&nbsp;лично сома на&nbsp;57&nbsp;кг вытащил. 57<span style="margin-right:-0.2em;">,</span><span style="margin-left:0.2em;"> </span>24 и&nbsp;7&nbsp;кг&nbsp;&mdash; трех сомов поймал&raquo;,&nbsp;&mdash; цитирует его<span style="margin-right:0.44em;"> </span><span style="margin-left:-0.44em;">&laquo;</span>Интерфакс&raquo;.
+<span style="margin-left:-0.44em;">&laquo;</span>Я&nbsp;лично сома на&nbsp;57&nbsp;кг вытащил. 57, 24 и&nbsp;7&nbsp;кг&nbsp;&mdash; трех сомов поймал&raquo;,&nbsp;&mdash; цитирует его<span style="margin-right:0.44em;"> </span><span style="margin-left:-0.44em;">&laquo;</span>Интерфакс&raquo;.
 HTML
 , <<<HTML
-<span class="oa_oquote_nl">&laquo;</span>Я&nbsp;лично сома на&nbsp;57&nbsp;кг вытащил. 57<span class="oa_comma_b">,</span><span class="oa_comma_e"> </span>24 и&nbsp;7&nbsp;кг&nbsp;&mdash; трех сомов поймал&raquo;,&nbsp;&mdash; цитирует его<span class="oa_oqoute_sp_s"> </span><span class="oa_oqoute_sp_q">&laquo;</span>Интерфакс&raquo;.
+<span class="oa_oquote_nl">&laquo;</span>Я&nbsp;лично сома на&nbsp;57&nbsp;кг вытащил. 57, 24 и&nbsp;7&nbsp;кг&nbsp;&mdash; трех сомов поймал&raquo;,&nbsp;&mdash; цитирует его<span class="oa_oqoute_sp_s"> </span><span class="oa_oqoute_sp_q">&laquo;</span>Интерфакс&raquo;.
 HTML
 , "Привязка килограммов", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'on'));
 

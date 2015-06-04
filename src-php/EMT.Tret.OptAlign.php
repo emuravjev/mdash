@@ -43,17 +43,17 @@ class EMT_Tret_OptAlign extends EMT_Tret
 			'function'	=> 'oaquote_extra'
 		),
 		'oa_obracket_coma' => array(
-				'description'	=> 'Оптическое выравнивание для пунктуации (скобка и запятая)',
+				'description'	=> 'Оптическое выравнивание для пунктуации (скобка)',
 				//'disabled'      => true,	
 				'pattern' 		=> array(
 							'/(\040|\&nbsp\;|\t)\(/ei',
 							'/(\n|\r|^)\(/ei',
-							'/([а-яёa-z0-9]+)\,(\040+)/iue',
+							//'/([а-яёa-z0-9]+)\,(\040+)/iue',
 						),
 				'replacement' 	=> array(
 							'$this->tag($m[1], "span", array("class"=>"oa_obracket_sp_s")) . $this->tag("(", "span", array("class"=>"oa_obracket_sp_b"))',
 							'$m[1] . $this->tag("(", "span", array("class"=>"oa_obracket_nl_b"))',
-							'$m[1] . $this->tag(",", "span", array("class"=>"oa_comma_b")) . $this->tag(" ", "span", array("class"=>"oa_comma_e"))',
+							//'$m[1] . $this->tag(",", "span", array("class"=>"oa_comma_b")) . $this->tag(" ", "span", array("class"=>"oa_comma_e"))',
 						),
 			),					
 		
