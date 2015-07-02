@@ -3,8 +3,8 @@
 
 ###################################################
 ##  Evgeny Muravjev Typograph, http://mdash.ru   ##
-##  Version: 3.4-py (beta)                       ##
-##  Release Date: May 4, 2014                    ##
+##  Version: 3.5-py                              ##
+##  Release Date: Jyly 2, 2015                   ##
 ##  Authors: Evgeny Muravjev & Alexander Drutsa  ## 
 ###################################################
 
@@ -165,10 +165,10 @@ class _EMT_Lib:
     def safe_tag_chars(self, text, way):
         if (way):
              #OK:
-            text = re.sub('(\</?)(.+?)(\>)', lambda m: m.group(1)+(u"%%___" if m.group(2).strip()[0:1] == u'a' else u"") + EMT_Lib.encrypt_tag(m.group(2).strip()) + m.group(3), text, 0, re.S |re.U)        
+            text = re.sub('(\</?)([^<>]+?)(\>)', lambda m: m.group(0) if (len(m.group(1))==1 and m.group(2).strip()[0:1] == '-' and m.group(2).strip()[1:2] != '-') else  (m.group(1)+(u"%%___" if m.group(2).strip()[0:1] == u'a' else u"") + EMT_Lib.encrypt_tag(m.group(2).strip()) + m.group(3)), text, 0, re.S |re.U)        
         else:
              #OK:
-            text = re.sub('(\</?)(.+?)(\>)', lambda m: m.group(1)+(EMT_Lib.decrypt_tag(m.group(2).strip()[4:]) if m.group(2).strip()[0:3] == u'%%___' else EMT_Lib.decrypt_tag(m.group(2).strip())) + m.group(3), text, 0, re.S|re.U)        
+            text = re.sub('(\</?)([^<>]+?)(\>)', lambda m: m.group(0) if (len(m.group(1))==1 and m.group(2).strip()[0:1] == '-' and m.group(2).strip()[1:2] != '-') else  (m.group(1)+(EMT_Lib.decrypt_tag(m.group(2).strip()[4:]) if m.group(2).strip()[0:3] == u'%%___' else EMT_Lib.decrypt_tag(m.group(2).strip())) + m.group(3)), text, 0, re.S|re.U)        
         return text
 
 
@@ -697,6 +697,16 @@ class _EMT_Lib:
             return re._expand(pattern, _m(m), replacement)
         return re.sub(pattern, _r, string, count , flags)
     
+    def split_number(self, num):
+        repl = ""
+        for i in range(len(num),-1,-3):
+            if i-3>=0:
+                repl = ("&thinsp;" if i>3 else "") + num[i-3:i] + repl
+            else:
+                repl = num[0:i] + repl
+        return repl
+        
+    
 EMT_Lib = _EMT_Lib()
 
 BASE64_PARAGRAPH_TAG = 'cA===' 
@@ -1150,8 +1160,8 @@ class EMT_Tret:
 
 # /**
 # * Evgeny Muravjev Typograph, http://mdash.ru
-# * Version: 3.0 Gold Master
-# * Release Date: September 28, 2013
+# * Version: 3.5 Gold Master
+# * Release Date: July 2, 2015
 # * Authors: Evgeny Muravjev & Alexander Drutsa  
 # */
 
@@ -1852,6 +1862,7 @@ class EMTypograph(EMT_Base):
                 'Nobr.phone_builder_v2' : 'direct',
                 'Nobr.ip_address' : 'direct',
                 'Nobr.spaces_nobr_in_surname_abbr' : 'direct',
+                'Nobr.dots_for_surname_abbr' : 'direct',                
                 'Nobr.nbsp_celcius' : 'direct',		
                 'Nobr.hyphen_nowrap_in_small_words' : 'direct',
                 'Nobr.hyphen_nowrap' : 'direct',

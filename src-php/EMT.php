@@ -1,8 +1,8 @@
 <?php
 /**
 * Evgeny Muravjev Typograph, http://mdash.ru
-* Version: 3.0 Gold Master
-* Release Date: September 28, 2013
+* Version: 3.5 Gold Master
+* Release Date: July 2, 2015
 * Authors: Evgeny Muravjev & Alexander Drutsa  
 */
 
@@ -805,6 +805,7 @@ class EMTypograph extends EMT_Base
 		'Nobr.phone_builder_v2' => 'direct',
 		'Nobr.ip_address' => 'direct',
 		'Nobr.spaces_nobr_in_surname_abbr' => 'direct',
+		'Nobr.dots_for_surname_abbr' => 'direct',
 		'Nobr.nbsp_celcius' => 'direct',		
 		'Nobr.hyphen_nowrap_in_small_words' => 'direct',
 		'Nobr.hyphen_nowrap' => 'direct',
@@ -828,8 +829,7 @@ class EMTypograph extends EMT_Base
 		'Number.minus_in_numbers_range' => 'direct',
 		'Number.auto_times_x' => 'direct',
 		'Number.simple_fraction' => 'direct',
-		'Number.math_chars' => 'direct',
-		//'Number.split_number_to_triads' => 'direct',
+		'Number.math_chars' => 'direct',		
 		'Number.thinsp_between_number_triads' => 'direct',
 		'Number.thinsp_between_no_and_number' => 'direct',
 		'Number.thinsp_between_sect_and_number' => 'direct',
@@ -875,6 +875,7 @@ class EMTypograph extends EMT_Base
 		//'Etc.no_nbsp_in_nobr' => 'direct',		
 		'Etc.unicode_convert' => array('description' => 'Преобразовывать html-сущности в юникод', 'selector' => array('*', 'Etc.nobr_to_nbsp'), 'setting' => array('dounicode','active'), 'exact_selector' => true ,'disabled' => true),
 		'Etc.nobr_to_nbsp' => 'direct',
+		'Etc.split_number_to_triads' => 'direct',
 	
 	);
 	

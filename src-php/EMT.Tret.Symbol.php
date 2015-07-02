@@ -73,8 +73,11 @@ class EMT_Tret_Symbol extends EMT_Tret
 			),
 		'arrows_symbols' => array(
 				'description'	=> 'Замена стрелок вправо-влево на html коды',
-				'pattern' 		=> array('/(\s|\>|\&nbsp\;|^)\-\>($|\s|\&nbsp\;|\<)/', '/(\s|\>|\&nbsp\;|^|;)\<\-(\s|\&nbsp\;|$)/', '/→/u', '/←/u'),
-				'replacement' 	=> array('\1&rarr;\2', '\1&larr;\2', '&rarr;', '&larr;' )
+				//'pattern' 		=> array('/(\s|\>|\&nbsp\;|^)\-\>($|\s|\&nbsp\;|\<)/', '/(\s|\>|\&nbsp\;|^|;)\<\-(\s|\&nbsp\;|$|\<)/', '/→/u', '/←/u'),
+				//'pattern' 		=> array('/\-\>($|\s|\&nbsp\;|\<)/', '/(\s|\>|\&nbsp\;|^|;)\<\-(\s|\&nbsp\;|$|\<)/', '/→/u', '/←/u'),
+				'pattern' 		=> array('/\-\>/', '/\<\-/', '/→/u', '/←/u'),
+				//'replacement' 	=> array('\1&rarr;\2', '\1&larr;\2', '&rarr;', '&larr;' ),
+				'replacement' 	=> array('&rarr;', '&larr;', '&rarr;', '&larr;' ),
 			),			
 		);
 }

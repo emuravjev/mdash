@@ -155,8 +155,10 @@ HTML
 	$tester->add_test("Выучить: § 123 и § Главное о главном", "<p>Выучить: &sect;&thinsp;123 и &sect;&thinsp;Главное о&nbsp;главном</p>", null, "Привязка параграфа к слову", array('OptAlign.all'=>'off'));
 	$tester->add_test("-><-", "<p>&rarr;&larr;</p>", null, "Соседние стрелочки 1", array('OptAlign.all'=>'off'));
 	
-	// На данный момент не имплементировано 
-	//$tester->add_test("<- ->", "<p>&rarr; &larr;</p>", null, "Соседние стрелочки 2", array('OptAlign.all'=>'off'));
+	$tester->add_test("<- ->", "<p>&larr; &rarr;</p>", null, "Соседние стрелочки 2", array('OptAlign.all'=>'off'));
+	$tester->add_test("-> ->", "<p>&rarr; &rarr;</p>", null, "Соседние стрелочки 3", array('OptAlign.all'=>'off'));
+	$tester->add_test("<- <-", "<p>&larr; &larr;</p>", null, "Соседние стрелочки 4", array('OptAlign.all'=>'off'));
+	$tester->add_test("<- ->", "<p><- -></p>", null, "Соседние стрелочки 5", array('OptAlign.all'=>'off', 'Symbol.arrows_symbols' => 'off'));
 	
 	
 	$tester->add_test("Неразрывный пробел после «как то:» в случае перечисления", <<<HTML
@@ -167,7 +169,7 @@ HTML
 HTML
 , "Закрывающая кавычка", array( 'OptAlign.all'=>'on'));
 	$tester->add_test("Не совсем верно, мы заменим на.", "Не&nbsp;совсем верно, мы&nbsp;заменим&nbsp;на.", null, "Предлог в конце предложения", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
-	$tester->add_test("Напр.: В 1999 году; No 89954; ГОСТ 20283. По-иному раз- биваются номера телефонов (см. 6.1.6).", "Напр.: В&nbsp;1999 году; No&nbsp;89954; <nobr>ГОСТ 20283</nobr>. По-иному раз- биваются номера телефонов (см.&nbsp;6.1.6).", null, "Сокращения и аббревиатуры 1", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+	$tester->add_test("Напр.: В 1999 году; No 89954; ГОСТ 20283. По-иному раз- биваются номера телефонов (см. 6.1.6).", "Напр.: В&nbsp;1999 году; No&nbsp;89&thinsp;954; <nobr>ГОСТ 20&thinsp;283</nobr>. По-иному раз- биваются номера телефонов (см.&nbsp;6.1.6).", null, "Сокращения и аббревиатуры 1", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 	
 	$tester->add_test(<<<HTML
 Пунктуация и знаки препинания
@@ -271,6 +273,8 @@ HTML
 HTML
 , null, "Повторное типографирование с новыми параграфами", array('OptAlign.all'=>'off'));
 
+	$tester->add_test("8(905)1234567", "8(905)1234567", null, "Телефон не должен разбиваться на триады чисел", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+	$tester->add_test("В 2000 году ему предложили снять несколько серий детективного сериала «Черная комната» для канала РЕН ТВ. Но, что поделать.", "В&nbsp;2000 году ему предложили снять несколько серий детективного сериала &laquo;Черная комната&raquo; для канала РЕН&nbsp;ТВ. Но, что поделать.", null, "Не проставлять точки к инициалам", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 
 
 ?>

@@ -88,8 +88,8 @@ HTML;
 <<<CODE
 /**
 * Evgeny Muravjev Typograph, http://mdash.ru
-* Version: 3.4 Gold Master
-* Release Date: May 4, 2014
+* Version: 3.5 Gold Master
+* Release Date: July 2, 2015
 * Authors: Evgeny Muravjev & Alexander Drutsa  
 */
 

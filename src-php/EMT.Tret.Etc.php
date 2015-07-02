@@ -43,6 +43,12 @@ class EMT_Tret_Etc extends EMT_Tret
 				'pattern' 		=> '/([^\d\>]|^)([\d]{1,2}\:[\d]{2})(-|\&mdash\;|\&minus\;)([\d]{1,2}\:[\d]{2})([^\d\<]|$)/eui',
 				'replacement' 	=> '$m[1] . $this->tag($m[2]."&mdash;".$m[4],"span", array("class"=>"nowrap")).$m[5]'
 			),
+		'split_number_to_triads' => array(
+				'description'	=> 'Разбиение числа на триады',				
+				'pattern' 		=> '/([^a-zA-Z0-9<\)]|^)([0-9]{5,})([^a-zA-Z>\(]|$)/eu',
+				'replacement' 	=> '$m[1].str_replace(" ","&thinsp;",EMT_Lib::split_number($m[2])).$m[3] '
+				//'function'	    => 'split_number'
+			),	
 		'expand_no_nbsp_in_nobr' => array(
 				'description'	=> 'Удаление nbsp в nobr/nowrap тэгах',
 				'function'	=> 'remove_nbsp'
@@ -53,9 +59,7 @@ class EMT_Tret_Etc extends EMT_Tret
 				'function'	=> 'nobr_to_nbsp'
 			),
 		);
-
 	
-		
 	protected function remove_nbsp()
 	{
 		$thetag = $this->tag("###", 'span', array('class' => "nowrap"));
@@ -84,6 +88,19 @@ class EMT_Tret_Etc extends EMT_Tret
 		$e = preg_quote($arr[1], '/');
 		$this->_text = $this->preg_replace_e('/'.$b.'(.*?)'.$e.'/iue', 'str_replace(" ","&nbsp;",$m[1]);' , $this->_text );
 	}
+	/*
+	protected function split_number () {
+		
+		$this->preg_replace_e("/([^a-zA-Z<]|^)([0-9]{5,})([^a-zA-Z>]|$)/u", )
+		
+		$match = ;
+		while(preg_match($match, $this->_text, $m)) {
+			$repl = "";
+			for($i = strlen($m[2]); $i >=0 ; $i-=3) 
+				if($i-3>=0) $repl = ($i>3?"&thinsp;":"").substr($m[2], $i-3, 3) . $repl; else $repl = substr($m[2], 0, $i) . $repl;
+			$this->_text = str_replace($m[1], $repl, $this->_text);
+		}
+	}*/
 	
 }
 

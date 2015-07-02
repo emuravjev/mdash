@@ -55,7 +55,7 @@ class EMT_Tret_Punctmark extends EMT_Tret
 			),
 		'fix_brackets_space' => array(
 				'description'	=> 'Пробел перед открывающей скобочкой',
-				'pattern' 		=> '/([a-zа-яё0-9])(\()/iu',
+				'pattern' 		=> '/([a-zа-яё])(\()/iu',
 				'replacement' 	=> '\1 \2'
 			),			
 		'dot_on_end' => array(
