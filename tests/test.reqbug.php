@@ -245,4 +245,7 @@ TEXT
 , "<p>&copy;&nbsp;1999&mdash;2003&nbsp;гг., ООО&nbsp;&laquo;Фирма &laquo;Эдельвейс&raquo;. Все права защищены.</p>
 <p>Она добавила: &laquo;И&nbsp;цвет мой самый любимый&nbsp;&mdash; &bdquo;эсмеральда&ldquo;&raquo;.</p>" , null, "Обработка неправильных кавычек в разных параграфах", array('OptAlign.all'=>'off'));
 
+$tester->add_test("15 мм", "<p>15&nbsp;мм</p>" , null, "Повтороное типографирование не вставляет пробел", array('OptAlign.all'=>'off'));
+ 
+
 ?>
