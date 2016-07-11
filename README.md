@@ -46,4 +46,4 @@ python test.py
 DEBUGGING
 =========
 Debug EMT, use debug.php
-This script will show all the rules tat were used, for selected text and show step by step log.
+This script will show all the rules that were used, for selected text and show step by step log.
