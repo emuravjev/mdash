@@ -90,7 +90,7 @@ class EMT_Tret_Abbr extends EMT_Tret
 			),
 		'nbsp_money_abbr' => array(
 				'description'	=> 'Форматирование денежных сокращений (расстановка пробелов и привязка названия валюты к числу)',
-				'pattern' 		=> '/(\d)((\040|\&nbsp\;)?(тыс|млн|млрд)\.?(\040|\&nbsp\;)?)?(\040|\&nbsp\;)?(руб\.|долл\.|евро|€|&euro;|\$|у[\.]? ?е[\.]?)/ieu', 
+				'pattern' 		=> '/(\d)((\040|\&nbsp\;)?(тыс|млн|млрд)\.?(\040|\&nbsp\;)?)?(\040|\&nbsp\;)?(руб\.|долл\.|евро|€|&euro;|\$|у[\.]? ?е[\.]?\s)/ieu', 
 				'replacement' 	=> '$m[1].($m[4]?"&nbsp;".$m[4].($m[4]=="тыс"?".":""):"")."&nbsp;".(!preg_match("#у[\\\\.]? ?е[\\\\.]?#iu",$m[7])?$m[7]:"у.е.")',
 				'replacement_python' => 'm.group(1)+(u"&nbsp;"+m.group(4)+(u"." if m.group(4)==u"тыс" else u"") if m.group(4) else u"")+u"&nbsp;"+(m.group(7) if not re.match(u"у[\\\\.]? ?е[\\\\.]?",m.group(7),re.I | re.U) else u"у.е.")'
 				//'replacement_py' => 'm.group(1)+(\"&nbsp;\"+m.group(4)+(m.group(4)==\"\u0442\u044b\u0441\"?\".\" if m.group(4) else \"\"):\"\")+\"&nbsp;\"+(m.group(7) if !preg_match(\"#\u0443[\\\\.]? ?\u0435[\\\\.]?#iu\",m.group(7)) else \"\u0443.\u0435.\")'
