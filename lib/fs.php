@@ -2,7 +2,7 @@
 
 class FS
 {
-	function list_only_files($dir, $template = "")
+	public static function list_only_files($dir, $template = "")
 	{
 		$list = array();
 		$ddir  = $dir;

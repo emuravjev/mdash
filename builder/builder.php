@@ -5,7 +5,7 @@
 	header("Content-type: text/html; charset=utf-8");
 	
 	$resname = "../EMT.php";
-	$action = $_REQUEST['action'];
+	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
 	if($action == "")
 	{
 		$phpself = $_SERVER['PHP_SELF'];
@@ -102,7 +102,6 @@ CODE
 			fputs($fp, $s);
 		}
 		
-		fprintf($fp, "?>");
 		fclose($fp);
 		
 		echo "Сгенерирован скрипт типографа для PHP<br />";
