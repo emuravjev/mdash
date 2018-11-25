@@ -246,6 +246,7 @@ TEXT
 <p>Она добавила: &laquo;И&nbsp;цвет мой самый любимый&nbsp;&mdash; &bdquo;эсмеральда&ldquo;&raquo;.</p>" , null, "Обработка неправильных кавычек в разных параграфах", array('OptAlign.all'=>'off'));
 
 $tester->add_test("15 мм", "<p>15&nbsp;мм</p>" , null, "Повтороное типографирование не вставляет пробел", array('OptAlign.all'=>'off'));
+$tester->add_test("после 19.00 уехать от остановки", "после 19.00 уехать от&nbsp;остановки" , null, "Неверная обработка денежных сокращений у.е.", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
  
 
 ?>
