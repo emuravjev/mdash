@@ -689,7 +689,7 @@ class EMT_Lib
 		return $cond ? $true : $false;
 	}
 	
-	function split_number($num) {
+	public static function split_number($num) {
 		return number_format($num, 0, '', ' ');
 	}
 

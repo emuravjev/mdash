@@ -739,10 +739,10 @@ class EMT_Base
 		{
 			if(isset($setupmap['map']))
 			{
-				$ret['map'] = $test['params']['map'];
-				$ret['disable'] = $test['params']['map_disable'];
-				$ret['strict'] = $test['params']['map_strict'];
-				$test['params']['maps'] = array($ret);
+				$ret['map'] = $setupmap['map'];
+				$ret['disable'] = $setupmap['map_disable'];
+				$ret['strict'] = $setupmap['map_strict'];
+				$setupmap['maps'] = array($ret);
 				unset($setupmap['map']);
 				unset($setupmap['map_disable']);
 				unset($setupmap['map_strict']);

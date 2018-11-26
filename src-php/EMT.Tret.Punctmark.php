@@ -21,8 +21,16 @@ class EMT_Tret_Punctmark extends EMT_Tret
 			), 	
 		'punctuation_marks_base_limit' => array(
 				'description'	=> 'Лишние запятые, двоеточия, точки с запятой',
-				'pattern' 		=> '/([\,]|[\:]|[\;]]){2,}/',
-				'replacement' 	=> '\1'
+				'pattern' 		=> array(
+							'/([\,]|[\:]){2,}/',
+							'/(;){2,}/',
+							'/((,|:);){2,}/',
+							),
+				'replacement' 	=> array(
+							'\1',
+							'\1',
+							'\1',
+							),
 			),
 		'hellip' => array(
 				'description'	=> 'Замена трех точек на знак многоточия',

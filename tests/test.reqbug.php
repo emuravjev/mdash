@@ -247,6 +247,7 @@ TEXT
 
 $tester->add_test("15 мм", "<p>15&nbsp;мм</p>" , null, "Повтороное типографирование не вставляет пробел", array('OptAlign.all'=>'off'));
 $tester->add_test("после 19.00 уехать от остановки", "после 19.00 уехать от&nbsp;остановки" , null, "Неверная обработка денежных сокращений у.е.", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+$tester->add_test("<!-- <tag/> -->", "<!-- <tag/> -->" , null, "Обработка HTML комментариев", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
  
 
 ?>
