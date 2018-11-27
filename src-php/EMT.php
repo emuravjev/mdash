@@ -253,7 +253,7 @@ class EMT_Base
     		$safeblocks = true === $way ? $this->_safe_blocks : array_reverse($this->_safe_blocks);
        		foreach ($safeblocks as $block) 
        		{
-        		$text = preg_replace_callback("/({$block['open']})(.+?)({$block['close']})/s",   create_function('$m','return $m[1].'.$safeType . '.$m[3];')   , $text);
+        		$text = preg_replace_callback("/({$block['open']})(.*?)({$block['close']})/s",   create_function('$m','return $m[1].'.$safeType . '.$m[3];')   , $text);
         	}
     	}
     	
