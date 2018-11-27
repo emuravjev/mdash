@@ -24,7 +24,7 @@ class EMT_Tret_Quote extends EMT_Tret
 			
 		'open_quote' => array(
 				'description'	=> 'Открывающая кавычка',
-				'pattern' 		=> '/(^|\(|\s|\>|-)((\"|\\\")+)(\S+)/iue',
+				'pattern' 		=> '/(^|\(|\s|\>|-)((\"|\\\")+)(\S+?)/iue',
 				'replacement' 	=> '$m[1] . str_repeat(self::QUOTE_FIRS_OPEN, substr_count($m[2],"\"") ) . $m[4]'
 			),
 		'close_quote' => array(

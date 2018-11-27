@@ -6,14 +6,18 @@ header('Content-Type: text/html; charset=utf-8');
 require_once("../EMT.php");
 
 
+$t = new EMTypograph();
+$t->add_safe_tag('code');
+$t->set_text("<pre><code>\"text\"</code></pre>");
+echo $t->apply();
 
+exit;
 
 // 1. Запуск типографа с настройками по умолчанию
 $typograf = new EMTypograph();
 $typograf->set_text("...Когда В. И. Пупкин увидел в газете ( это была &quot;Сермяжная правда&quot; № 45) рубрику Weather Forecast(r), он не поверил своим глазам - температуру обещали +-451F.");
 $result = $typograf->apply();
 echo "<i>Настройки по умолчанию</i>: " . $result . "\n";
-
 
 
 

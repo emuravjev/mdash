@@ -275,6 +275,8 @@ HTML
 
 	$tester->add_test("8(905)1234567", "8(905)1234567", null, "Телефон не должен разбиваться на триады чисел", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 	$tester->add_test("В 2000 году ему предложили снять несколько серий детективного сериала «Черная комната» для канала РЕН ТВ. Но, что поделать.", "В&nbsp;2000 году ему предложили снять несколько серий детективного сериала &laquo;Черная комната&raquo; для канала РЕН&nbsp;ТВ. Но, что поделать.", null, "Не проставлять точки к инициалам", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+	$tester->add_test("emuravjev@gm1-1ail.com", "<a href=\"mailto:emuravjev@gm1-1ail.com\">emuravjev@gm1-1ail.com</a>", null, "Порча почты, при сложном домене 1", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+	$tester->add_test("emur1-1avjev@gmail.com", "<a href=\"mailto:emur1-1avjev@gmail.com\">emur1-1avjev@gmail.com</a>", null, "Порча почты, при сложном домене 2", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 
 
 ?>

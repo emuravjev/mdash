@@ -11,7 +11,7 @@ class EMT_Tret_Punctmark extends EMT_Tret
 	public $rules = array( 
 	 	'auto_comma' => array(
 	 			'description'	=> 'Расстановка запятых перед а, но',
-		 		'pattern' 		=> '/([a-zа-яё])(\s|&nbsp;)(но|а)(\s|&nbsp;)/iu',
+		 		'pattern' 		=> '/([a-zа-яё])(\s|&nbsp;)(но|а)(\s|&nbsp;)/u',
 		 		'replacement' 	=> '\1,\2\3\4'
 	 		), 
 		'punctuation_marks_limit' => array(

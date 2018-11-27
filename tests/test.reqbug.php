@@ -248,6 +248,10 @@ TEXT
 $tester->add_test("15 мм", "<p>15&nbsp;мм</p>" , null, "Повтороное типографирование не вставляет пробел", array('OptAlign.all'=>'off'));
 $tester->add_test("после 19.00 уехать от остановки", "после 19.00 уехать от&nbsp;остановки" , null, "Неверная обработка денежных сокращений у.е.", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
 $tester->add_test("<!-- <tag/> -->", "<!-- <tag/> -->" , null, "Обработка HTML комментариев", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+$tester->add_test('<p>test - "test"</p><p>"test" - test</p>', '<p>test&nbsp;&mdash; &laquo;test&raquo;</p><p>&laquo;test&raquo;&nbsp;&mdash; test</p>' , null, "Если один абзац заканчивается закрывающей кавычкой, то следющий за ним абзац не обрабатывается", array('OptAlign.all'=>'off'));
+$tester->add_test('Тарифы зон А и Б', 'Тарифы зон А и Б' , null, "Запятая перед А", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+$tester->add_test('Поймала следующий баг: если в статье есть ссылки вроде http://www.bolshoyvopros.ru/questions/693440-kogda-otmechaetsja-den-synovej-kakie-pozdravlenija-s-dnjom-synovej.html (обратите внимание на цифры и дефис после них).', 'Поймала следующий баг: если в&nbsp;статье есть ссылки вроде <a href="http://www.bolshoyvopros.ru/questions/693440-kogda-otmechaetsja-den-synovej-kakie-pozdravlenija-s-dnjom-synovej.html">www.bolshoyvopros.ru/questions/693440-kogda-otmechaetsja-den-synovej-kakie-pozdravlenija-s-dnjom-synovej.html</a> (обратите внимание на&nbsp;цифры и&nbsp;дефис после них).' , null, "Правильная обработка ссылок 1", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
+$tester->add_test('https://some.domain.ru/#hesh:a1fe4bd7-ad5a-4588-8127-8496db8f6c5d', '<a href="https://some.domain.ru/#hesh:a1fe4bd7-ad5a-4588-8127-8496db8f6c5d">some.domain.ru/#hesh:a1fe4bd7-ad5a-4588-8127-8496db8f6c5d</a>' , null, "Правильная обработка ссылок 2", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'));
  
 
 ?>

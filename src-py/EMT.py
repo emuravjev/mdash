@@ -705,7 +705,18 @@ class _EMT_Lib:
             else:
                 repl = num[0:i] + repl
         return repl
-        
+     
+	# https://mathiasbynens.be/demo/url-regex
+	# @gruber v2 (218 chars)
+    def url_regex(self):
+        #return u"""(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))"""
+        return u"""((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))"""
+	
+	# https://emailregex.com/
+    def email_regex(self):
+        z = u"""(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"""
+        return z
+	
     
 EMT_Lib = _EMT_Lib()
 
@@ -1201,6 +1212,8 @@ class EMT_Base:
         
         self.settings = {}
         self._safe_blocks = []	
+        self._safe_sequences = []	
+        self._safe_sequence_mark = u"SAFESEQUENCENUM";
 
     def log(self, xstr, data = None):
         if not self.logging:
@@ -1273,6 +1286,34 @@ class EMT_Base:
                     'open' :  xopen,
                     'close' :  close
             })
+            
+    # /**
+    # * Добавление защищенного блока
+    # *
+    # * @param 	string $type тип последовательности
+    # *            0 - URL
+    # *            1 - почта
+    # * @param 	string $content реальное содержимое
+    # * @return  void
+    # */
+    def _add_safe_sequence(self, type, content):
+        self._safe_sequences.append({
+                    'type' : type,
+                    'content' :  content
+            })
+    
+    # /**
+    # * Вычисляем тэг, которого нет в заданном тексте
+    # *
+    # * @return 	array
+    # */
+    def detect_safe_mark(self):
+    	seq = self._safe_sequence_mark
+    	i = 0
+    	while self._text.find(seq) != -1:
+    		seq = EMT_Lib.str_replace(u"SAFESEQUENCENUM",u"SAFESEQUENCE"+str(i)+u"NUM", self._safe_sequence_mark);
+    		i += 1
+    	self._safe_sequence_mark = seq
     
     # /**
     # * Список защищенных блоков
@@ -1281,6 +1322,14 @@ class EMT_Base:
     # */
     def get_all_safe_blocks(self):
        return self._safe_blocks
+    
+    # /**
+    # * Список защищенных последовательностей
+    # *
+    # * @return 	array
+    # */
+    def get_all_safe_sequences(self):
+    	return self._safe_sequences
     
     # /**
     # * Удаленного блока по его номеру ключа
@@ -1358,6 +1407,90 @@ class EMT_Base:
     
     
     # /**
+    # * Кодирование УРЛа
+    # *
+    # * @param regex array $m
+    # * @return unknown
+    # */
+    def safe_sequence_url(self, m):
+    	id = len(self._safe_sequences);
+    	self._add_safe_sequence(0, m.group(0));
+    	return u"http://mdash.ru/A0"+self._safe_sequence_mark+str(id)+u"ID";
+    
+    # /**
+    # * Кодирование Почты
+    # *
+    # * @param regex array $m
+    # * @return unknown
+    # */
+    def safe_sequence_email(self, m):
+    	id = len(self._safe_sequences);
+    	self._add_safe_sequence(1, m.group(0));
+    	return u"A1"+self._safe_sequence_mark+str(id)+u"ID@mdash.ru";
+     
+    # /**
+    # * Декодирование УРЛа
+    # *
+    # * @param regex array $m
+    # * @return unknown
+    # */
+    def unsafe_sequence_url(self, m):
+    	return self._safe_sequences[int(m.group(1))]['content'];
+    
+    # /**
+    # * Декодирование УРЛа с удалением http://
+    # *
+    # * @param regex array $m
+    # * @return unknown
+    # */
+    def unsafe_sequence_url_nohttp(self, m):
+    	z = self._safe_sequences[int(m.group(1))]['content'];
+    	return re.sub(u"([^:]+)://", "", z);
+    
+    
+    # /**
+    # * Декодирование Почты
+    # *
+    # * @param regex array $m
+    # * @return unknown
+    # */
+    def unsafe_sequence_email(self, m):
+    	return self._safe_sequences[int(m.group(1))]['content'];
+    
+    # /**
+    # * Сохранение защищенных последовательностей
+    # *
+    # * @param   string $text
+    # * @param   bool $safe если true, то содержимое блоков будет сохранено, иначе - раскодировано. 
+    # * @return  string
+    # */
+    def safe_sequences(self, text, way, show = True):
+    	if way:
+            def repl1(m):
+                return self.safe_sequence_url(m) #text = preg_replace_callback(EMT_Lib.url_regex(), repl1, text);
+            text = re.sub(EMT_Lib.url_regex(), repl1, text, 0, re.U | re.I | re.S)
+            
+            def repl2(m):
+                return self.safe_sequence_email(m) #text = preg_replace_callback(EMT_Lib::email_regex(), array($this, "safe_sequence_email") , $text);
+            text = re.sub(EMT_Lib.email_regex(), repl2, text, 0, re.U | re.I | re.S)
+            
+            
+    	else:
+            def repl3(m):
+                return self.unsafe_sequence_url(m) #$text = preg_replace_callback('~http://mdash.ru/A0'.$this->_safe_sequence_mark.'(\d+)ID~ims', array($this, "unsafe_sequence_url") , $text);
+            text = re.sub(u'http://mdash.ru/A0'+self._safe_sequence_mark+u'(\d+)ID', repl3, text, 0, re.U | re.I | re.S)
+            def repl4(m):
+                return self.unsafe_sequence_url_nohttp(m) #$text = preg_replace_callback('~mdash.ru/A0'.$this->_safe_sequence_mark.'(\d+)ID~ims', array($this, "unsafe_sequence_url_nohttp") , $text);
+            text = re.sub(u'mdash.ru/A0'+self._safe_sequence_mark+u'(\d+)ID', repl4, text, 0, re.U | re.I | re.S)
+            def repl5(m):
+                return self.unsafe_sequence_email(m) #$text = preg_replace_callback('~A1'.$this->_safe_sequence_mark.'(\d+)ID@mdash.ru~ims', array($this, "unsafe_sequence_email") , $text);
+            text = re.sub(u'A1'+self._safe_sequence_mark+u'(\d+)ID@mdash.ru', repl5, text, 0, re.U | re.I | re.S)
+    		
+    	return text
+    
+    
+    
+    # /**
     # * Декодирование блоков, которые были скрыты в момент типографирования
     # *
     # * @param   string $text
@@ -1401,6 +1534,8 @@ class EMT_Base:
             self.add_safe_tag('notg')
             self.add_safe_block('span-notg', '<span class="_notg_start"></span>', '<span class="_notg_end"></span>')
         self.inited = True
+        
+        self.detect_safe_mark()
     
     
     
@@ -1489,6 +1624,9 @@ class EMT_Base:
         
         self.debug(self, 'init', self._text)
         
+        self._text = self.safe_sequences(self._text, True)
+        self.debug(self, 'safe_sequences', self._text)
+        
         self._text = self.safe_blocks(self._text, True)
         self.debug(self, 'safe_blocks', self._text)
         
@@ -1547,6 +1685,9 @@ class EMT_Base:
         
         self._text = self.safe_blocks(self._text, False)	
         self.debug(self, 'unsafe_blocks', self._text)
+        
+        self._text = self.safe_sequences(self._text, False)	
+        self.debug(self, 'unsafe_sequences', self._text)
         
         if not self.disable_notg_replace:
             repl = ['<span class="_notg_start"></span>', '<span class="_notg_end"></span>']

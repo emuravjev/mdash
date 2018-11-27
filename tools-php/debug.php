@@ -81,6 +81,8 @@ if($_REQUEST['inputdata'])
 			switch($debug['place'])
 			{
 				case "init":  $tt = "До обработки типографом"; break;
+				case "safe_sequences":  $tt = "Включение безопасных последовательностей"; break;
+				case "unsafe_sequences":  $tt = "Выключение безопасных последовательностей"; break;
 				case "safe_blocks":  $tt = "Включение безопасных блоков"; break;
 				case "unsafe_blocks":  $tt = "Возврат безопасных блоков"; break;
 				case "safe_tag_chars":  $tt = "Сохранение содержимого тэгов"; break;

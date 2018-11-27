@@ -32,4 +32,14 @@ HTML
 HTML
 , null, "Отмена типографирования тэга pre в внешним тэгом", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'), "code");
 
+	$tester->add_test(<<<HTML
+http://mdash.ru/the-best-typograph.html
+Что-то: http://mdash.ru/A0SAFESEQUENCENUM1ID 
+HTML
+, <<<HTML
+<a href="http://mdash.ru/the-best-typograph.html">mdash.ru/the-best-typograph.html</a><br />
+Что-то: <a href="http://mdash.ru/A0SAFESEQUENCENUM1ID">mdash.ru/A0SAFESEQUENCENUM1ID</a>
+HTML
+, null, "Обработка ссылок с имеющейся маркой", array('Text.paragraphs'=>'off', 'OptAlign.all'=>'off'), "code");
+
 ?>

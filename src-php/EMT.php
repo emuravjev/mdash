@@ -80,7 +80,9 @@ class EMT_Base
 	
 	
 	
-	protected $_safe_blocks = array();	
+	protected $_safe_blocks = array();
+	protected $_safe_sequences = array();
+	protected $_safe_sequence_mark = "SAFESEQUENCENUM";
 	
 	
 	/**
@@ -128,6 +130,38 @@ class EMT_Base
     }
     
     /**
+     * Добавление защищенного блока
+     *
+     * @param 	string $type тип последовательности
+     *            0 - URL
+     *            1 - почта
+     * @param 	string $content реальное содержимое
+     * @return  void
+     */
+    private function _add_safe_sequence($type, $content)
+    {
+    	$this->_safe_sequences[] = array(
+    			'type' => $type,
+    			'content' =>  $content,
+    		);
+    }
+    
+    /**
+     * Вычисляем тэг, которого нет в заданном тексте
+     *
+     * @return 	array
+     */
+    protected function detect_safe_mark() {
+    	$seq = $this->_safe_sequence_mark;
+    	$i = 0;
+    	while(strpos($this->_text, $seq) !== false) {
+    		$seq = str_replace("SAFESEQUENCENUM","SAFESEQUENCE".$i."NUM", $this->_safe_sequence_mark);
+    		$i++;
+    	}
+    	$this->_safe_sequence_mark = $seq;
+    }
+    
+    /**
      * Список защищенных блоков
      *
      * @return 	array
@@ -135,6 +169,16 @@ class EMT_Base
     public function get_all_safe_blocks()
     {
     	return $this->_safe_blocks;
+    }
+    
+    /**
+     * Список защищенных последовательностей
+     *
+     * @return 	array
+     */
+    public function get_all_safe_sequences()
+    {
+    	return $this->_safe_sequences;
     }
     
     /**
@@ -149,7 +193,6 @@ class EMT_Base
     		if($block['id']==$id) unset($this->_safe_blocks[$k]);
     	}
     }
-    
     
     /**
      * Добавление защищенного блока
@@ -217,6 +260,81 @@ class EMT_Base
     	return $text;
     }
     
+    /**
+     * Кодирование УРЛа
+     *
+     * @param regex array $m
+     * @return unknown
+     */
+    function safe_sequence_url($m) {
+    	$id = count($this->_safe_sequences);
+    	$this->_add_safe_sequence(0, $m[0]);
+    	return "http://mdash.ru/A0".$this->_safe_sequence_mark.$id."ID";
+    }
+    
+    /**
+     * Кодирование Почты
+     *
+     * @param regex array $m
+     * @return unknown
+     */
+    function safe_sequence_email($m) {
+    	$id = count($this->_safe_sequences);
+    	$this->_add_safe_sequence(1, $m[0]);
+    	return "A1".$this->_safe_sequence_mark.$id."ID@mdash.ru";
+    }
+    
+    /**
+     * Декодирование УРЛа
+     *
+     * @param regex array $m
+     * @return unknown
+     */
+    function unsafe_sequence_url($m) {
+    	return $this->_safe_sequences[$m[1]]['content'];
+    }
+    
+    /**
+     * Декодирование УРЛа с удалением http://
+     *
+     * @param regex array $m
+     * @return unknown
+     */
+    function unsafe_sequence_url_nohttp($m) {
+    	$z = $this->_safe_sequences[$m[1]]['content'];
+    	return preg_replace("~([^:]+)://~", "", $z);
+    }
+    
+    
+    /**
+     * Декодирование Почты
+     *
+     * @param regex array $m
+     * @return unknown
+     */
+    function unsafe_sequence_email($m) {
+    	return $this->_safe_sequences[$m[1]]['content'];
+    }
+    
+    /**
+     * Сохранение защищенных последовательностей
+     *
+     * @param   string $text
+     * @param   bool $safe если true, то содержимое блоков будет сохранено, иначе - раскодировано. 
+     * @return  string
+     */
+    public function safe_sequences($text, $way, $show = true)
+    {
+    	if(true === $way) {
+    		$text = preg_replace_callback(EMT_Lib::url_regex(), array($this, "safe_sequence_url") , $text);
+    		$text = preg_replace_callback(EMT_Lib::email_regex(), array($this, "safe_sequence_email") , $text);
+    	} else {
+    		$text = preg_replace_callback('~http://mdash.ru/A0'.$this->_safe_sequence_mark.'(\d+)ID~ims', array($this, "unsafe_sequence_url") , $text);
+    		$text = preg_replace_callback('~mdash.ru/A0'.$this->_safe_sequence_mark.'(\d+)ID~ims', array($this, "unsafe_sequence_url_nohttp") , $text);
+    		$text = preg_replace_callback('~A1'.$this->_safe_sequence_mark.'(\d+)ID@mdash.ru~ims', array($this, "unsafe_sequence_email") , $text);
+    	}
+    	return $text;
+    }
     
      /**
      * Декодирование блоков, которые были скрыты в момент типографирования
@@ -287,6 +405,8 @@ class EMT_Base
 			$this->add_safe_block('span-notg', '<span class="_notg_start"></span>', '<span class="_notg_end"></span>');
 		}
 		$this->inited = true;
+		
+		$this->detect_safe_mark();
 	}
 	
 	
@@ -394,6 +514,9 @@ class EMT_Base
 		
 		$this->debug($this, 'init', $this->_text);
 		
+		$this->_text = $this->safe_sequences($this->_text, true);
+		$this->debug($this, 'safe_sequences', $this->_text);
+		
 		$this->_text = $this->safe_blocks($this->_text, true);
 		$this->debug($this, 'safe_blocks', $this->_text);
 		
@@ -402,6 +525,7 @@ class EMT_Base
 		
 		$this->_text = EMT_Lib::clear_special_chars($this->_text);
 		$this->debug($this, 'clear_special_chars', $this->_text);
+		
 		
 		foreach ($atrets as $tret) 		
 		{
@@ -459,6 +583,9 @@ class EMT_Base
 		
 		$this->_text = $this->safe_blocks($this->_text, false);		
 		$this->debug($this, 'unsafe_blocks', $this->_text);
+		
+		$this->_text = $this->safe_sequences($this->_text, false);
+		$this->debug($this, 'unsafe_sequences', $this->_text);
 		
 		if(!$this->disable_notg_replace)
 		{
