@@ -9,7 +9,7 @@ class EMT_Tret_Etc extends EMT_Tret
 	
 	
 	public $classes = array(
-			'nowrap'           => 'word-spacing:nowrap;',
+			'nowrap'           => 'white-space:nowrap;',
 		);
 	
 	

@@ -9,7 +9,7 @@ class EMT_Tret_Nobr extends EMT_Tret
 	public $title = "Неразрывные конструкции";
 	
 	public $classes = array(
-			'nowrap'           => 'word-spacing:nowrap;',
+			'nowrap'           => 'white-space:nowrap;',
 			);
 	
 	public $rules = array(

@@ -7,7 +7,7 @@ require_once('EMT.Tret.php');
 class EMT_Tret_Text extends EMT_Tret
 {
 	public $classes = array(
-			'nowrap'           => 'word-spacing:nowrap;',
+			'nowrap'           => 'white-space:nowrap;',
 		);
 	
 	/**

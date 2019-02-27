@@ -11,7 +11,7 @@ class EMT_Tret_Abbr extends EMT_Tret
 	public $domain_zones = array('ru','ру','com','ком','org','орг', 'уа', 'ua');
 	
 	public $classes = array(
-			'nowrap'           => 'word-spacing:nowrap;',
+			'nowrap'           => 'white-space:nowrap;',
 			);
 	
 	public $rules = array(

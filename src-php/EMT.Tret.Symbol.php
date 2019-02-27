@@ -12,7 +12,7 @@ class EMT_Tret_Symbol extends EMT_Tret
 	 * @var array
 	 */
 	public $classes = array(
-			'nowrap'           => 'word-spacing:nowrap;',
+			'nowrap'           => 'white-space:nowrap;',
 		);
 	
 	

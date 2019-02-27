@@ -9,7 +9,7 @@ class EMT_Tret_Date extends EMT_Tret
 	public $title = "Даты и дни";
 	
 	public $classes = array(
-			'nowrap'           => 'word-spacing:nowrap;',
+			'nowrap'           => 'white-space:nowrap;',
 			);
 	
 	public $rules = array(

@@ -12,7 +12,7 @@ class EMT_Tret_Space extends EMT_Tret
 	                             'com', 'net', 'edu', 'gov', 'org', 'mil', 'int', 'info', 'biz', 'info', 'name', 'pro');
 	
 	public $classes = array(
-			'nowrap'           => 'word-spacing:nowrap;',
+			'nowrap'           => 'white-space:nowrap;',
 			);
 	
 	public $rules = array(
